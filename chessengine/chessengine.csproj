@@ -50,14 +50,37 @@
   <ItemGroup>
     <Compile Include="Alliance.cs" />
     <Compile Include="board\Board.cs" />
-    <Compile Include="board\Move.cs" />
+    <Compile Include="board\Builder.cs" />
+    <Compile Include="board\moves\AttackMove.cs" />
+    <Compile Include="board\moves\castle\CastleMove.cs" />
+    <Compile Include="board\moves\castle\KingSideCastleMove.cs" />
+    <Compile Include="board\moves\castle\QueenSideCastleMove.cs" />
+    <Compile Include="board\moves\MajorMove.cs" />
+    <Compile Include="board\moves\Move.cs" />
     <Compile Include="board\BoardUtils.cs" />
+    <Compile Include="board\moves\MoveFactory.cs" />
+    <Compile Include="board\moves\NullMove.cs" />
+    <Compile Include="board\moves\pawn\PawnAttackMove.cs" />
+    <Compile Include="board\moves\pawn\PawnEnPassantAttackMove.cs" />
+    <Compile Include="board\moves\pawn\PawnJump.cs" />
+    <Compile Include="board\moves\pawn\PawnMove.cs" />
+    <Compile Include="board\tiles\EmptyTile.cs" />
+    <Compile Include="board\tiles\OccupiedTile.cs" />
+    <Compile Include="Extensions\EnumExtensions\EnumExtender.cs" />
+    <Compile Include="Extensions\EnumExtensions\TextAttribute.cs" />
     <Compile Include="pieces\Bishop.cs" />
+    <Compile Include="pieces\King.cs" />
     <Compile Include="pieces\Knight.cs" />
+    <Compile Include="pieces\Pawn.cs" />
     <Compile Include="pieces\Piece.cs" />
-    <Compile Include="board\Tile.cs" />
+    <Compile Include="board\tiles\Tile.cs" />
+    <Compile Include="pieces\PieceType.cs" />
     <Compile Include="pieces\Queen.cs" />
     <Compile Include="pieces\Rook.cs" />
+    <Compile Include="player\BlackPlayer.cs" />
+    <Compile Include="player\MoveTransition.cs" />
+    <Compile Include="player\Player.cs" />
+    <Compile Include="player\WhitePlayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

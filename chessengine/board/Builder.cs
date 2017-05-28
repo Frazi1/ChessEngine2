@@ -4,7 +4,7 @@ using chessengine.pieces;
 namespace chessengine.board {
     public class Builder {
         public Dictionary<int, Piece> BoardConfig { get; }
-        private Alliance.AllianceEnum _nextMoveMaker;
+        public Alliance.AllianceEnum NextMoveMaker { get; private set; }
 
         public Builder() {
             BoardConfig = new Dictionary<int, Piece>();
@@ -20,8 +20,12 @@ namespace chessengine.board {
         }
 
         public Builder SetMoveMaker(Alliance.AllianceEnum nextMoveMaker) {
-            _nextMoveMaker = nextMoveMaker;
+            NextMoveMaker = nextMoveMaker;
             return this;
+        }
+
+        public void SetEnPassantPawn(Pawn movedPawn) {
+            throw new System.NotImplementedException();
         }
     }
 }
