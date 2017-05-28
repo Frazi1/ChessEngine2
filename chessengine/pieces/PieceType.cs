@@ -4,7 +4,7 @@ namespace chessengine.pieces {
     public enum PieceType {
         [Text("P")] Pawn,
         [Text("R")] Rook,
-        [Text("N")] Knigth,
+        [Text("N")] Knight,
         [Text("B")] Bishop,
         [Text("Q")] Queen,
         [Text("K")] King

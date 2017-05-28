@@ -10,7 +10,7 @@ namespace chessengine.pieces {
         private static readonly int[] CandidateMoveCoordinates = { -17, -15, -10, -6, 6, 10, 15, 17 };
 
         public Knight(int piecePosition, Alliance.AllianceEnum pieceAlliance)
-            : base(piecePosition, pieceAlliance, PieceType.Knigth) {
+            : base(piecePosition, pieceAlliance, PieceType.Knight) {
         }
 
         public override ICollection<Move> CalculateLegalMoves(Board board) {
@@ -70,7 +70,7 @@ namespace chessengine.pieces {
         }
 
         public override string ToString() {
-            return PieceType.Knigth.ToText();
+            return PieceType.Knight.ToText();
         }
     }
 }

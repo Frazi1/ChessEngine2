@@ -31,7 +31,6 @@ namespace chessengine.board.moves {
             Builder builder = new Builder();
 
             foreach (Piece piece in Board.CurrentPlayer.ActivePieces) {
-                //hashcode and equals
                 if (!MovedPiece.Equals(piece)) {
                     builder.SetPiece(piece);
                 }

@@ -22,26 +22,29 @@ namespace chessengine.pieces {
         public abstract ICollection<Move> CalculateLegalMoves(Board board);
         public abstract Piece MovePiece(Move move);
 
+        #region Equality
         protected bool Equals(Piece other) {
             return PiecePosition == other.PiecePosition
                    && PieceAlliance == other.PieceAlliance
-                   && PieceType == other.PieceType;
+                   && PieceType == other.PieceType
+                   && IsFirstMove == other.IsFirstMove;
         }
 
         public override bool Equals(object obj) {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((Piece) obj);
+            return Equals((Piece)obj);
         }
 
         public override int GetHashCode() {
             unchecked {
                 int hashCode = PiecePosition;
-                hashCode = (hashCode * 397) ^ (int) PieceAlliance;
-                hashCode = (hashCode * 397) ^ (int) PieceType;
+                hashCode = (hashCode * 397) ^ (int)PieceAlliance;
+                hashCode = (hashCode * 397) ^ (int)PieceType;
                 return hashCode;
             }
-        }
+        } 
+        #endregion
     }
 }
