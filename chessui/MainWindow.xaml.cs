@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using chessengine;
+using chessui.Controller;
 
 namespace chessui {
     /// <summary>
@@ -19,11 +20,14 @@ namespace chessui {
     /// </summary>
     public partial class MainWindow : Window {
         public Game Game { get; set; }
+        public ChessController ChessController { get; set; }
 
         public MainWindow() {
             InitializeComponent();
             Game = new Game();
-            this.ChessBoard.DataContext = Game;
+            Helper.CreateInstance(Game.NumTiles, Game.NumTilesPerRow, ChessBoard.TileSize);
+            ChessController = new ChessController(Game, ChessBoard);
+            ChessBoard.DataContext = Game;
         }
     }
 }

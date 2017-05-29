@@ -1,12 +1,31 @@
 ﻿using System;
 using System.Text;
 using System.Windows;
+using chessengine;
+using chessengine.board.tiles;
 using chessengine.pieces;
 
 namespace chessui.Controller {
-    public static class Helper {
+    public class Helper {
 
-        public static string SelectPieceImage(Piece tilePiece) {
+        public int NumTiles { get; set; }
+        public int TilesPerRow { get; set; }
+        public double TileSize { get; set; }
+
+        public static Helper Instance { get; private set; }
+
+        public static Helper CreateInstance(int numTiles, int tilesPerRow, double tileSize) {
+            Instance = new Helper(numTiles, tilesPerRow, tileSize);
+            return Instance;
+        }
+
+        public Helper(int numTiles, int tilesPerRow, double tileSize) {
+            NumTiles = numTiles;
+            TilesPerRow = tilesPerRow;
+            TileSize = tileSize;
+        }
+
+        public string SelectPieceImage(Piece tilePiece) {
             string prefix = "Resources/";
             StringBuilder pathBuilder = new StringBuilder();
             pathBuilder
@@ -17,27 +36,26 @@ namespace chessui.Controller {
             return String.Concat(prefix, pathBuilder.ToString().ToLower());
         }
 
-        public static Point ConvertToScreenPoint(Point tilePoint, double tileSize) {
-            double x = tilePoint.X * tileSize;
-            double y = tilePoint.Y * tileSize;
+        public Point ConvertTileCoordinateToScreenPoint(int coordinate) {
+            double x = coordinate % TilesPerRow * TileSize;
+            double y = coordinate / TilesPerRow * TileSize;
             return new Point(x, y);
         }
 
-        public static Point ConvertTileCoordinateToPoint(int coordinate, int tilesPerRow) {
-            int row = coordinate / tilesPerRow;
-            int column = coordinate % tilesPerRow;
-            return new Point(column, row);
-        }
-
-        public static int ConvertToTileCoordinate(Point screenPoint, double tileSize, int tilesPerRow) {
-            int row = (int)(screenPoint.Y / tileSize);
-            int column = (int)(screenPoint.X / tileSize);
-            int coordinate = row * tilesPerRow + column;
+        public int ConvertToTileCoordinate(Point screenPoint) {
+            int row = (int)(screenPoint.Y / TileSize);
+            int column = (int)(screenPoint.X / TileSize);
+            int coordinate = row * TilesPerRow + column;
             return coordinate;
         }
 
         public static double CalculateTileSize(double width, int tilesPerRow) {
             return width / tilesPerRow;
+        }
+
+        public Tile GetTileFromScreenPoint(Game game, Point screenPoint) {
+            int coordinate = ConvertToTileCoordinate(screenPoint);
+            return game.CurrentBoard.GetTile(coordinate);
         }
     }
 }

@@ -57,8 +57,8 @@ namespace chessengine.pieces {
             return BoardUtils.FirstColumn[currentPosition] && candidateOffset == 1;
         }
         
-        public override string ToString() {
-            return PieceType.Rook.ToText();
-        }
+        //public override string ToString() {
+        //    return PieceType.Rook.ToText();
+        //}
     }
 }

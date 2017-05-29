@@ -79,6 +79,7 @@
     <Compile Include="pieces\Queen.cs" />
     <Compile Include="pieces\Rook.cs" />
     <Compile Include="player\BlackPlayer.cs" />
+    <Compile Include="player\MoveStatus.cs" />
     <Compile Include="player\MoveTransition.cs" />
     <Compile Include="player\Player.cs" />
     <Compile Include="player\WhitePlayer.cs" />

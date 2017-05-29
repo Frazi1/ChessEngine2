@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 using chessengine.board;
 using chessengine.board.moves;
+using chessengine.Extensions.EnumExtensions;
 
 // ReSharper disable once CheckNamespace
 namespace chessengine.pieces {
@@ -45,6 +47,17 @@ namespace chessengine.pieces {
                 return hashCode;
             }
         } 
+
         #endregion
+
+        public override string ToString() {
+            StringBuilder builder = new StringBuilder();
+            char c = PieceType.ToText()[0];
+            builder.Append(c);
+            return PieceAlliance == Alliance.AllianceEnum.Black
+                ? builder.ToString().ToLower()
+                : builder.ToString();
+        }
     }
+
 }

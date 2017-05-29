@@ -62,8 +62,8 @@ namespace chessengine.pieces {
             return new Pawn(move.DestinationCoordinate, move.MovedPiece.PieceAlliance);
         }
         
-        public override string ToString() {
-            return PieceType.Pawn.ToText();
-        }
+        //public override string ToString() {
+        //    return PieceType.Pawn.ToText();
+        //}
     }
 }

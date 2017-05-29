@@ -13,10 +13,4 @@ namespace chessengine.player {
             MoveStatus = moveStatus;
         }
     }
-
-    public enum MoveStatus {
-        Done,
-        Illegal,
-        LeavesPlayerInCheck
-    }
 }

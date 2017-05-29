@@ -57,8 +57,8 @@ namespace chessengine.pieces {
             return BoardUtils.FirstColumn[currentPosition] && (candidateOffset == -7 || candidateOffset == 9);
         }
 
-        public override string ToString() {
-            return PieceType.Bishop.ToText();
-        }
+        //public override string ToString() {
+        //    return PieceType.Bishop.ToText();
+        //}
     }
 }

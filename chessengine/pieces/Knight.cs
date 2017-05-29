@@ -69,8 +69,8 @@ namespace chessengine.pieces {
                     || candidateOffset == 10 || candidateOffset == 17);
         }
 
-        public override string ToString() {
-            return PieceType.Knight.ToText();
-        }
+        //public override string ToString() {
+        //    return PieceType.Knight.ToText();
+        //}
     }
 }

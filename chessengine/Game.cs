@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using chessengine.board;
 using chessengine.board.moves;
+using chessengine.board.tiles;
+using chessengine.player;
 
 namespace chessengine {
     public class Game {
@@ -29,12 +32,13 @@ namespace chessengine {
         }
 
         private List<Board> Boards { get; set; }
+        public int NumTilesPerRow { get { return BoardUtils.NumTilesPerRow; } }
+        public int NumTiles { get { return BoardUtils.NumTiles; } }
 
-        public void ExecuteMove(Move move) {
-            Board board = move.Execute();
-            Boards.Add(board);
-            CurrentBoard = board;
+        public MoveStatus DoMove(Move move) {
+            MoveTransition moveTransition = CurrentBoard.CurrentPlayer.MakeMove(move);
+            CurrentBoard = moveTransition.TransitionBoard;
+            return moveTransition.MoveStatus;
         }
-
     }
 }

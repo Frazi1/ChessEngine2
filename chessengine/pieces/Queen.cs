@@ -58,8 +58,8 @@ namespace chessengine.pieces {
                 (candidateOffset == 1 || candidateOffset == -7 || candidateOffset == 9);
         }
         
-        public override string ToString() {
-            return PieceType.Queen.ToText();
-        }
+        //public override string ToString() {
+        //    return PieceType.Queen.ToText();
+        //}
     }
 }

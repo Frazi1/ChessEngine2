@@ -67,7 +67,7 @@ namespace chessengine.player {
             return ImmutableList.CreateRange(escapeMoves);
         }
 
-        protected MoveTransition MakeMove(Move move) {
+        public MoveTransition MakeMove(Move move) {
             if (!IsMoveLegal(move)) {
                 return new MoveTransition(Board, move, MoveStatus.Illegal);
             }
