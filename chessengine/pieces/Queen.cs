@@ -7,8 +7,10 @@ using chessengine.Extensions.EnumExtensions;
 namespace chessengine.pieces {
     public class Queen : Piece {
         private static readonly int[] CandidateMoveVectorCoordinates = { -9, -8, -7, -1, 1, 7, 8, 9 };
-        public Queen(int piecePosition, Alliance.AllianceEnum pieceAlliance)
-            : base(piecePosition, pieceAlliance,PieceType.Queen) {
+
+
+        public Queen(int piecePosition, bool isFirstMove, Alliance.AllianceEnum pieceAlliance)
+            : base(piecePosition, isFirstMove, pieceAlliance, PieceType.Queen) {
         }
 
         public override ICollection<Move> CalculateLegalMoves(Board board) {
@@ -45,7 +47,7 @@ namespace chessengine.pieces {
         }
         
         public override Piece MovePiece(Move move) {
-            return new Queen(move.DestinationCoordinate, move.MovedPiece.PieceAlliance);
+            return new Queen(move.DestinationCoordinate,false, move.MovedPiece.PieceAlliance);
         }
 
         private static bool IsFirstColumnExlusion(int currentPosition, int candidateOffset) {

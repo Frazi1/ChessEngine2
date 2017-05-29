@@ -8,8 +8,9 @@ namespace chessengine.pieces {
     public class Rook : Piece {
 
         private static readonly int[] CandidateMoveVectorCoordinates = { -8, -1, 1, 8 };
-        public Rook(int piecePosition, Alliance.AllianceEnum pieceAlliance)
-            : base(piecePosition, pieceAlliance, PieceType.Rook) {
+
+        public Rook(int piecePosition, bool isFirstMove, Alliance.AllianceEnum pieceAlliance)
+            : base(piecePosition, isFirstMove, pieceAlliance, PieceType.Rook) {
         }
 
         public override ICollection<Move> CalculateLegalMoves(Board board) {
@@ -46,7 +47,7 @@ namespace chessengine.pieces {
         }
 
         public override Piece MovePiece(Move move) {
-            return new Rook(move.DestinationCoordinate, move.MovedPiece.PieceAlliance);
+            return new Rook(move.DestinationCoordinate,false, move.MovedPiece.PieceAlliance);
         }
         
         private static bool IsFirstColumnExlusion(int currentPosition, int candidateOffset) {

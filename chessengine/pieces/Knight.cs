@@ -9,8 +9,8 @@ namespace chessengine.pieces {
     public class Knight : Piece {
         private static readonly int[] CandidateMoveCoordinates = { -17, -15, -10, -6, 6, 10, 15, 17 };
 
-        public Knight(int piecePosition, Alliance.AllianceEnum pieceAlliance)
-            : base(piecePosition, pieceAlliance, PieceType.Knight) {
+        public Knight(int piecePosition, bool isFirstMove, Alliance.AllianceEnum pieceAlliance)
+            : base(piecePosition, isFirstMove, pieceAlliance, PieceType.Knight) {
         }
 
         public override ICollection<Move> CalculateLegalMoves(Board board) {
@@ -44,7 +44,7 @@ namespace chessengine.pieces {
         }
 
         public override Piece MovePiece(Move move) {
-            return new Knight(move.DestinationCoordinate, move.MovedPiece.PieceAlliance);
+            return new Knight(move.DestinationCoordinate,false, move.MovedPiece.PieceAlliance);
         }
 
         private static bool IsFirstColumnExlusion(int currentPosition, int candidateOffset) {

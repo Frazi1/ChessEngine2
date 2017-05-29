@@ -13,11 +13,11 @@ namespace chessengine.pieces {
         public Alliance.AllianceEnum PieceAlliance { get; }
         public PieceType PieceType { get; }
 
-        protected Piece(int piecePosition, Alliance.AllianceEnum pieceAlliance, PieceType pieceType) {
+        protected Piece(int piecePosition,bool isFirstMove, Alliance.AllianceEnum pieceAlliance, PieceType pieceType) {
             PiecePosition = piecePosition;
             PieceAlliance = pieceAlliance;
             //TODO: more work
-            IsFirstMove = false;
+            IsFirstMove = isFirstMove;
             PieceType = pieceType;
         }
 

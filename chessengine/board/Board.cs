@@ -67,40 +67,40 @@ namespace chessengine.board {
             Builder builder = new Builder();
 
             //Black
-            builder.SetPiece(new Rook(0, Alliance.AllianceEnum.Black));
-            builder.SetPiece(new Knight(1, Alliance.AllianceEnum.Black));
-            builder.SetPiece(new Bishop(2, Alliance.AllianceEnum.Black));
-            builder.SetPiece(new Queen(3, Alliance.AllianceEnum.Black));
-            builder.SetPiece(new King(4, Alliance.AllianceEnum.Black));
-            builder.SetPiece(new Bishop(5, Alliance.AllianceEnum.Black));
-            builder.SetPiece(new Knight(6, Alliance.AllianceEnum.Black));
-            builder.SetPiece(new Rook(7, Alliance.AllianceEnum.Black));
-            builder.SetPiece(new Pawn(8, Alliance.AllianceEnum.Black));
-            builder.SetPiece(new Pawn(9, Alliance.AllianceEnum.Black));
-            builder.SetPiece(new Pawn(10, Alliance.AllianceEnum.Black));
-            builder.SetPiece(new Pawn(11, Alliance.AllianceEnum.Black));
-            builder.SetPiece(new Pawn(12, Alliance.AllianceEnum.Black));
-            builder.SetPiece(new Pawn(13, Alliance.AllianceEnum.Black));
-            builder.SetPiece(new Pawn(14, Alliance.AllianceEnum.Black));
-            builder.SetPiece(new Pawn(15, Alliance.AllianceEnum.Black));
+            builder.SetPiece(new Rook(0, true, Alliance.AllianceEnum.Black));
+            builder.SetPiece(new Knight(1, true, Alliance.AllianceEnum.Black));
+            builder.SetPiece(new Bishop(2, true, Alliance.AllianceEnum.Black));
+            builder.SetPiece(new Queen(3, true, Alliance.AllianceEnum.Black));
+            builder.SetPiece(new King(4, true, Alliance.AllianceEnum.Black));
+            builder.SetPiece(new Bishop(5, true, Alliance.AllianceEnum.Black));
+            builder.SetPiece(new Knight(6, true, Alliance.AllianceEnum.Black));
+            builder.SetPiece(new Rook(7, true, Alliance.AllianceEnum.Black));
+            builder.SetPiece(new Pawn(8, true, Alliance.AllianceEnum.Black));
+            builder.SetPiece(new Pawn(9, true, Alliance.AllianceEnum.Black));
+            builder.SetPiece(new Pawn(10, true, Alliance.AllianceEnum.Black));
+            builder.SetPiece(new Pawn(11, true, Alliance.AllianceEnum.Black));
+            builder.SetPiece(new Pawn(12, true, Alliance.AllianceEnum.Black));
+            builder.SetPiece(new Pawn(13, true, Alliance.AllianceEnum.Black));
+            builder.SetPiece(new Pawn(14, true, Alliance.AllianceEnum.Black));
+            builder.SetPiece(new Pawn(15, true, Alliance.AllianceEnum.Black));
 
             //White
-            builder.SetPiece(new Pawn(48, Alliance.AllianceEnum.White));
-            builder.SetPiece(new Pawn(49, Alliance.AllianceEnum.White));
-            builder.SetPiece(new Pawn(50, Alliance.AllianceEnum.White));
-            builder.SetPiece(new Pawn(51, Alliance.AllianceEnum.White));
-            builder.SetPiece(new Pawn(52, Alliance.AllianceEnum.White));
-            builder.SetPiece(new Pawn(53, Alliance.AllianceEnum.White));
-            builder.SetPiece(new Pawn(54, Alliance.AllianceEnum.White));
-            builder.SetPiece(new Pawn(55, Alliance.AllianceEnum.White));
-            builder.SetPiece(new Rook(56, Alliance.AllianceEnum.White));
-            builder.SetPiece(new Knight(57, Alliance.AllianceEnum.White));
-            builder.SetPiece(new Bishop(58, Alliance.AllianceEnum.White));
-            builder.SetPiece(new Queen(59, Alliance.AllianceEnum.White));
-            builder.SetPiece(new King(60, Alliance.AllianceEnum.White));
-            builder.SetPiece(new Bishop(61, Alliance.AllianceEnum.White));
-            builder.SetPiece(new Knight(62, Alliance.AllianceEnum.White));
-            builder.SetPiece(new Rook(63, Alliance.AllianceEnum.White));
+            builder.SetPiece(new Pawn(48, true, Alliance.AllianceEnum.White));
+            builder.SetPiece(new Pawn(49, true, Alliance.AllianceEnum.White));
+            builder.SetPiece(new Pawn(50, true, Alliance.AllianceEnum.White));
+            builder.SetPiece(new Pawn(51, true, Alliance.AllianceEnum.White));
+            builder.SetPiece(new Pawn(52, true, Alliance.AllianceEnum.White));
+            builder.SetPiece(new Pawn(53, true, Alliance.AllianceEnum.White));
+            builder.SetPiece(new Pawn(54, true, Alliance.AllianceEnum.White));
+            builder.SetPiece(new Pawn(55, true, Alliance.AllianceEnum.White));
+            builder.SetPiece(new Rook(56, true, Alliance.AllianceEnum.White));
+            builder.SetPiece(new Knight(57, true, Alliance.AllianceEnum.White));
+            builder.SetPiece(new Bishop(58, true, Alliance.AllianceEnum.White));
+            builder.SetPiece(new Queen(59, true, Alliance.AllianceEnum.White));
+            builder.SetPiece(new King(60, true, Alliance.AllianceEnum.White));
+            builder.SetPiece(new Bishop(61, true, Alliance.AllianceEnum.White));
+            builder.SetPiece(new Knight(62, true, Alliance.AllianceEnum.White));
+            builder.SetPiece(new Rook(63, true, Alliance.AllianceEnum.White));
 
 
             builder.SetMoveMaker(Alliance.AllianceEnum.White);

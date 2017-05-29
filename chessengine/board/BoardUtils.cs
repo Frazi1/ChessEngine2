@@ -10,13 +10,13 @@ namespace chessengine.board {
         public static readonly bool[] EighthColumn = InitColumn(7);
 
         public static readonly bool[] FirstRank = InitRank(0);
-        public static readonly bool[] SecondRank = InitRank(1);
-        public static readonly bool[] ThirdRank = InitRank(2);
-        public static readonly bool[] FourthRank = InitRank(3);
-        public static readonly bool[] FifthRank = InitRank(4);
-        public static readonly bool[] SixthRank = InitRank(5);
-        public static readonly bool[] SeventhRank = InitRank(6);
-        public static readonly bool[] EigthRank = InitRank(7);
+        public static readonly bool[] SecondRank = InitRank(8);
+        public static readonly bool[] ThirdRank = InitRank(16);
+        public static readonly bool[] FourthRank = InitRank(24);
+        public static readonly bool[] FifthRank = InitRank(32);
+        public static readonly bool[] SixthRank = InitRank(40);
+        public static readonly bool[] SeventhRank = InitRank(48);
+        public static readonly bool[] EigthRank = InitRank(54);
 
 
         public const int NumTiles = 64;
@@ -37,12 +37,23 @@ namespace chessengine.board {
             return column;
         }
 
-        private static bool[] InitRank(int rowNumber) {
+
+        private static bool[] InitRank(int start) {
             bool[] rank = new bool[NumTiles];
             for (int i = 0; i < NumTilesPerRow; i++) {
-                rank[NumTilesPerRow * rowNumber + i] = true;
+                rank[start + i] = true;
             }
             return rank;
         }
+
+
+        //private static bool[] InitRank(int rowNumber) {
+        //    bool[] rank = new bool[NumTiles];
+        //    for (int i = 0; i < NumTilesPerRow; i++) {
+        //        rank[NumTilesPerRow * rowNumber + i] = true;
+        //    }
+        //    return rank;
+        //}
+
     }
 }

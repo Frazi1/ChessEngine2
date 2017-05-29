@@ -8,8 +8,8 @@ namespace chessengine.pieces {
     public class Bishop : Piece {
         private static readonly int[] CandidateMoveVectorCoordinates = {-9, -7, 7, 9};
 
-        public Bishop(int piecePosition, Alliance.AllianceEnum pieceAlliance)
-            : base(piecePosition, pieceAlliance, PieceType.Bishop) {
+        public Bishop(int piecePosition, bool isFirstMove, Alliance.AllianceEnum pieceAlliance)
+            : base(piecePosition, isFirstMove, pieceAlliance, PieceType.Bishop) {
         }
 
         public override ICollection<Move> CalculateLegalMoves(Board board) {
@@ -46,7 +46,7 @@ namespace chessengine.pieces {
         }
 
         public override Piece MovePiece(Move move) {
-            return new Bishop(move.DestinationCoordinate, move.MovedPiece.PieceAlliance);
+            return new Bishop(move.DestinationCoordinate,false, move.MovedPiece.PieceAlliance);
         }
 
         private bool IsFirstColumnExlusion(int currentPosition, int candidateOffset) {

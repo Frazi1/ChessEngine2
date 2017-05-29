@@ -7,11 +7,10 @@ using chessengine.Extensions.EnumExtensions;
 
 namespace chessengine.pieces {
     public class King : Piece {
-        private static readonly int[] CandidateMoveCoordinate = {-9, -8, -7, -1, 1, 7, 8, 9};
+        private static readonly int[] CandidateMoveCoordinate = { -9, -8, -7, -1, 1, 7, 8, 9 };
 
-
-        public King(int piecePosition, Alliance.AllianceEnum pieceAlliance)
-            : base(piecePosition, pieceAlliance, PieceType.King) {
+        public King(int piecePosition, bool isFirstMove, Alliance.AllianceEnum pieceAlliance)
+            : base(piecePosition, isFirstMove, pieceAlliance, PieceType.King) {
         }
 
         public override ICollection<Move> CalculateLegalMoves(Board board) {
@@ -42,9 +41,9 @@ namespace chessengine.pieces {
 
             return ImmutableList.CreateRange(legasMoves);
         }
-        
+
         public override Piece MovePiece(Move move) {
-            return new King(move.DestinationCoordinate, move.MovedPiece.PieceAlliance);
+            return new King(move.DestinationCoordinate, false, move.MovedPiece.PieceAlliance);
         }
 
         private static bool IsFirstColumnExlusion(int currentPosition, int candidateOffset) {
@@ -58,7 +57,7 @@ namespace chessengine.pieces {
                    && (candidateOffset == -7 || candidateOffset == 1
                        || candidateOffset == 9);
         }
-        
+
         //public override string ToString() {
         //    return PieceType.King.ToText();
         //}

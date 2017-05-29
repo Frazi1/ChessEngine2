@@ -29,7 +29,7 @@ namespace chessengine.board.moves.castle {
                 builder.SetPiece(piece);
             }
             builder.SetPiece(MovedPiece.MovePiece(this));
-            builder.SetPiece(new Rook(CastleRookDestination, CastleRook.PieceAlliance));
+            builder.SetPiece(new Rook(CastleRookDestination,false, CastleRook.PieceAlliance));
             builder.SetMoveMaker(Board.CurrentPlayer.Opponent.PlayerAlliance);
             return builder.Build();
         }
