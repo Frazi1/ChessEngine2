@@ -30,7 +30,9 @@ namespace chessengine.board {
 
             WhitePlayer = new WhitePlayer(this, whiteStandardLegalMoves, blackStandardLegalMoves);
             BlackPlayer = new BlackPlayer(this, whiteStandardLegalMoves, blackStandardLegalMoves);
-            CurrentPlayer = builder.NextMoveMaker == Alliance.AllianceEnum.Black ? BlackPlayer : WhitePlayer;
+            CurrentPlayer = builder.NextMoveMaker == Alliance.AllianceEnum.Black
+                ? BlackPlayer
+                : WhitePlayer;
         }
 
         public IEnumerable<Move> GetAllLegalMoves() {
@@ -57,7 +59,9 @@ namespace chessengine.board {
         private static IList<Tile> CreateTilesList(Builder builder) {
             Tile[] tiles = new Tile[BoardUtils.NumTiles];
             for (int i = 0; i < BoardUtils.NumTiles; i++) {
-                Piece piece = builder.BoardConfig.ContainsKey(i) ? builder.BoardConfig[i] : null;
+                Piece piece = builder.BoardConfig.ContainsKey(i) 
+                    ? builder.BoardConfig[i] 
+                    : null;
                 tiles[i] = Tile.CreateTile(i, piece);
             }
             return ImmutableList.CreateRange(tiles);
@@ -120,7 +124,6 @@ namespace chessengine.board {
                     builder.Append(Environment.NewLine);
             }
             return builder.ToString();
-
         }
     }
 }

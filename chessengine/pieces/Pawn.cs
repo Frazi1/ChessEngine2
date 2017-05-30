@@ -33,7 +33,7 @@ namespace chessengine.pieces {
                     int behindCandidateDestination = PiecePosition + Alliance.GetDirection(PieceAlliance) * 8;
                     if (!board.GetTile(behindCandidateDestination).IsTileOccupied
                         && !board.GetTile(candidateDestinationCoordinate).IsTileOccupied) {
-                        legalMoves.Add(new MajorMove(board, this, candidateDestinationCoordinate));
+                        legalMoves.Add(new /*MajorMove*/PawnJump(board, this, candidateDestinationCoordinate));
                     }
                 } else if (currentCandidateOffset == 7
                            && !BoardUtils.EighthColumn[PiecePosition] && Alliance.IsWhite(PieceAlliance)

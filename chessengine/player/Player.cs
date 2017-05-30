@@ -17,7 +17,7 @@ namespace chessengine.player {
         public abstract Alliance.AllianceEnum PlayerAlliance { get; }
         public abstract Player Opponent { get; }
 
-        public Player(Board board,
+        protected Player(Board board,
             ICollection<Move> legalMoves,
             ICollection<Move> opponentMoves) {
             Board = board;
@@ -26,14 +26,11 @@ namespace chessengine.player {
             IsInCheck = CalculateAttacksOnTile(PlayerKing.PiecePosition, opponentMoves).Count > 0;
         }
 
-        public static ICollection<Move> CalculateAttacksOnTile(int piecePosition,
+        protected static ICollection<Move> CalculateAttacksOnTile(int piecePosition,
             ICollection<Move> opponentMoves) {
-            List<Move> attackMoves = new List<Move>();
-            foreach (Move opponentMove in opponentMoves) {
-                if (piecePosition == opponentMove.DestinationCoordinate) {
-                    attackMoves.Add(opponentMove);
-                }
-            }
+            List<Move> attackMoves = opponentMoves
+                .Where(opponentMove => piecePosition == opponentMove.DestinationCoordinate)
+                .ToList();
             return ImmutableList.CreateRange(attackMoves);
         }
 
@@ -59,7 +56,7 @@ namespace chessengine.player {
         }
 
 
-        protected ICollection<Move> GetEscapeMoves() {
+        private ICollection<Move> GetEscapeMoves() {
             List<Move> escapeMoves = LegalMoves
                 .Select(move => new {move, transition = MakeMove(move)})
                 .Where(t => t.transition.MoveStatus == MoveStatus.Done)

@@ -25,7 +25,7 @@ namespace chessengine.board {
         }
 
         public void SetEnPassantPawn(Pawn movedPawn) {
-            throw new System.NotImplementedException();
+            //TODO: implement
         }
     }
 }

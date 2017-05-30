@@ -16,7 +16,7 @@ namespace chessengine.board.tiles {
 
         public abstract Piece Piece { get; }
 
-        public static IDictionary<int, EmptyTile> CreateAllPossibleEmptyTiles() {
+        private static IDictionary<int, EmptyTile> CreateAllPossibleEmptyTiles() {
             Dictionary<int, EmptyTile> emptyTilesDictionary = new Dictionary<int, EmptyTile>();
             for (int i = 0; i < BoardUtils.NumTiles; i++) {
                 emptyTilesDictionary.Add(i, new EmptyTile(i));
@@ -25,7 +25,9 @@ namespace chessengine.board.tiles {
         }
 
         public static Tile CreateTile(int coordinate, Piece piece) {
-            return piece != null ? (Tile)new OccupiedTile(coordinate, piece) : EmptyTilesCache[coordinate];
+            return piece != null
+                ? (Tile)new OccupiedTile(coordinate, piece)
+                : EmptyTilesCache[coordinate];
         }
     }
 }

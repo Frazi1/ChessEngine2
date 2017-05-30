@@ -37,7 +37,6 @@ namespace chessengine.board {
             return column;
         }
 
-
         private static bool[] InitRank(int start) {
             bool[] rank = new bool[NumTiles];
             for (int i = 0; i < NumTilesPerRow; i++) {
@@ -45,15 +44,5 @@ namespace chessengine.board {
             }
             return rank;
         }
-
-
-        //private static bool[] InitRank(int rowNumber) {
-        //    bool[] rank = new bool[NumTiles];
-        //    for (int i = 0; i < NumTilesPerRow; i++) {
-        //        rank[NumTilesPerRow * rowNumber + i] = true;
-        //    }
-        //    return rank;
-        //}
-
     }
 }

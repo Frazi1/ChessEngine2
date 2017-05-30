@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 using chessengine;
 using chessengine.board.moves;
@@ -34,27 +35,12 @@ namespace chessui.Controller {
                 Tile secondTile = Helper.Instance.GetTileFromScreenPoint(Game, e.GetPosition(ChessBoard));
                 MessageBox.Show(InvokeMove(SelectedTile, secondTile).ToString());
                 SelectedTile = null;
-
             }
         }
 
-        private MoveStatus InvokeMove(Tile selectedTile, Tile secondTile) {
-            Move move = FindMove(selectedTile, secondTile);
-            return Game.DoMove(move);
+        private MoveStatus InvokeMove(Tile fromTile, Tile toTile) {
+            return Game.DoMove(fromTile.Coordinate, toTile.Coordinate);
         }
-
-        private Move FindMove(Tile from, Tile to) {
-            Move move = null;
-            foreach (Move m in Game.CurrentBoard.CurrentPlayer.LegalMoves) {
-                if (m.MovedPiece.PiecePosition ==
-                    from.Coordinate && m.DestinationCoordinate == to.Coordinate) {
-                    move = m;
-                    break;
-                }
-            }
-            return move ?? Move.NullMove;
-        }
-
 
         private void Game_BoardChanged() {
             ChessBoard.Render(Game);
