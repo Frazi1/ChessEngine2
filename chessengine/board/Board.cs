@@ -20,10 +20,13 @@ namespace chessengine.board {
         public Player BlackPlayer { get; }
         public Player CurrentPlayer { get; }
 
+        public Pawn EnPassantPawn { get; }
+
         public Board(Builder builder) {
             _gameBoard = CreateTilesList(builder);
             WhitePieces = CalculateActivePieces(_gameBoard, Alliance.AllianceEnum.White);
             BlackPieces = CalculateActivePieces(_gameBoard, Alliance.AllianceEnum.Black);
+            EnPassantPawn = builder.EnPassantPawn;
 
             ICollection<Move> whiteStandardLegalMoves = CalculateLegalMoves(WhitePieces);
             ICollection<Move> blackStandardLegalMoves = CalculateLegalMoves(BlackPieces);

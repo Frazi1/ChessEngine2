@@ -25,19 +25,25 @@ namespace chessengine.pieces {
 
                 if (currentCandidateOffset == 8 && !board.GetTile(candidateDestinationCoordinate).IsTileOccupied) {
                     //TODO:Promotion
-                    legalMoves.Add(new MajorMove(board, this, candidateDestinationCoordinate));
+                    legalMoves.Add(new PawnMove(board, this, candidateDestinationCoordinate));
                 } else if (currentCandidateOffset == 16
                            && IsFirstMove
-                           && (BoardUtils.SecondRank[PiecePosition] && Alliance.IsBlack(PieceAlliance)
-                           || BoardUtils.SeventhRank[PiecePosition] && Alliance.IsWhite(PieceAlliance))) {
+                           && (BoardUtils.SecondRank[PiecePosition] && PieceAlliance == Alliance.AllianceEnum.Black
+                           || BoardUtils.SeventhRank[PiecePosition] && PieceAlliance == Alliance.AllianceEnum.White)) {
                     int behindCandidateDestination = PiecePosition + Alliance.GetDirection(PieceAlliance) * 8;
                     if (!board.GetTile(behindCandidateDestination).IsTileOccupied
                         && !board.GetTile(candidateDestinationCoordinate).IsTileOccupied) {
                         legalMoves.Add(new /*MajorMove*/PawnJump(board, this, candidateDestinationCoordinate));
                     }
                 } else if (currentCandidateOffset == 7
-                           && !BoardUtils.EighthColumn[PiecePosition] && Alliance.IsWhite(PieceAlliance)
-                           || !BoardUtils.FirstColumn[PiecePosition] && Alliance.IsBlack(PieceAlliance)) {
+                           && !BoardUtils.EighthColumn[PiecePosition] && PieceAlliance == Alliance.AllianceEnum.White
+                           || !BoardUtils.FirstColumn[PiecePosition] && PieceAlliance == Alliance.AllianceEnum.Black) {
+                    //EnPassantAttack
+                    if (board.EnPassantPawn != null && board.EnPassantPawn.PiecePosition ==
+                        PiecePosition + Alliance.GetOppositeDirection(PieceAlliance)) {
+                        legalMoves.Add(new PawnEnPassantAttackMove(board, this, candidateDestinationCoordinate, board.EnPassantPawn));
+                    }
+                    //AttackMove
                     if (!board.GetTile(candidateDestinationCoordinate).IsTileOccupied) continue;
                     Piece pieceOnCandidate = board.GetTile(candidateDestinationCoordinate).Piece;
                     if (PieceAlliance != pieceOnCandidate.PieceAlliance) {
@@ -48,8 +54,14 @@ namespace chessengine.pieces {
                             board.GetTile(candidateDestinationCoordinate).Piece));
                     }
                 } else if (currentCandidateOffset == 9
-                           && !BoardUtils.FirstColumn[PiecePosition] && Alliance.IsWhite(PieceAlliance)
-                           || !BoardUtils.EighthColumn[PiecePosition] && Alliance.IsBlack(PieceAlliance)) {
+                           && !BoardUtils.FirstColumn[PiecePosition] && PieceAlliance == Alliance.AllianceEnum.White
+                           || !BoardUtils.EighthColumn[PiecePosition] && PieceAlliance == Alliance.AllianceEnum.Black) {
+                    //EnPassant
+                    if (board.EnPassantPawn != null && board.EnPassantPawn.PiecePosition ==
+                        PiecePosition - Alliance.GetOppositeDirection(PieceAlliance)) {
+                        legalMoves.Add(new PawnEnPassantAttackMove(board, this, candidateDestinationCoordinate, board.EnPassantPawn));
+                    }
+                    //AttackMove
                     if (!board.GetTile(candidateDestinationCoordinate).IsTileOccupied) continue;
                     Piece pieceOnCandidate = board.GetTile(candidateDestinationCoordinate).Piece;
                     if (PieceAlliance != pieceOnCandidate.PieceAlliance) {
@@ -66,7 +78,7 @@ namespace chessengine.pieces {
         }
 
         public override Piece MovePiece(Move move) {
-            return new Pawn(move.DestinationCoordinate,false, move.MovedPiece.PieceAlliance);
+            return new Pawn(move.DestinationCoordinate, false, move.MovedPiece.PieceAlliance);
         }
 
         //public override string ToString() {

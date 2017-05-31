@@ -9,12 +9,8 @@ namespace chessengine {
             return alliance == AllianceEnum.Black ? 1 : -1;
         }
 
-        public static bool IsWhite(AllianceEnum alliance) {
-            return alliance == AllianceEnum.White;
-        }
-
-        public static bool IsBlack(AllianceEnum alliance) {
-            return alliance == AllianceEnum.Black;
+        public static int GetOppositeDirection(AllianceEnum alliance) {
+            return GetDirection(alliance) * -1;
         }
     }
 }

@@ -5,6 +5,7 @@ namespace chessengine.board {
     public class Builder {
         public Dictionary<int, Piece> BoardConfig { get; }
         public Alliance.AllianceEnum NextMoveMaker { get; private set; }
+        public Pawn EnPassantPawn { get; private set; }
 
         public Builder() {
             BoardConfig = new Dictionary<int, Piece>();
@@ -24,8 +25,9 @@ namespace chessengine.board {
             return this;
         }
 
-        public void SetEnPassantPawn(Pawn movedPawn) {
-            //TODO: implement
+        public Builder SetEnPassantPawn(Pawn movedPawn) {
+            EnPassantPawn = movedPawn;
+            return this;
         }
     }
 }
