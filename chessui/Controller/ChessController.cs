@@ -26,6 +26,7 @@ namespace chessui.Controller {
             ChessBoard = chessBoard;
             Game.BoardChanged += Game_BoardChanged;
             ChessBoard.MouseDown += ChessBoard_MouseDown;
+            ChessBoard.Loaded += ChessBoard_Loaded;
         }
 
         private void ChessBoard_MouseDown(object sender, MouseButtonEventArgs e) {
@@ -42,9 +43,24 @@ namespace chessui.Controller {
             return Game.DoMove(fromTile.Coordinate, toTile.Coordinate);
         }
 
-        private void Game_BoardChanged() {
-            ChessBoard.Render(Game);
+        private void RenderBoard(Game game) {
+            ChessBoard.ChessBoardCanvas.Children.Clear();
+            for (int i = 0; i < TilesPerRow; i++) {
+                bool colored = i % 2 != 0;
+                for (int j = 0; j < TilesPerRow; j++) {
+
+                    Tile tile = game.CurrentBoard.GetTile(i * TilesPerRow + j);
+                    ChessBoard.RenderTile(tile, colored);
+                    colored = !colored;
+                }
+            }
         }
 
+        private void Game_BoardChanged() {
+            RenderBoard(Game);
+        }
+        private void ChessBoard_Loaded(object sender, RoutedEventArgs e) {
+            RenderBoard(Game);
+        }
     }
 }

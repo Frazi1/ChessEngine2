@@ -81,24 +81,24 @@ namespace chessui {
         }
 
         #region Render Methods
-        public void Render(Game game) {
-            RenderBoard(game);
-        }
+        //public void Render(Game game) {
+        //    RenderBoard(game);
+        //}
 
-        private void RenderBoard(Game game) {
-            ChessBoardCanvas.Children.Clear();
-            for (int i = 0; i < TilesPerRow; i++) {
-                bool colored = i % 2 != 0;
-                for (int j = 0; j < TilesPerRow; j++) {
+        //private void RenderBoard(Game game) {
+        //    ChessBoardCanvas.Children.Clear();
+        //    for (int i = 0; i < TilesPerRow; i++) {
+        //        bool colored = i % 2 != 0;
+        //        for (int j = 0; j < TilesPerRow; j++) {
 
-                    Tile tile = game.CurrentBoard.GetTile(i * TilesPerRow + j);
-                    RenderTile(tile, colored);
-                    colored = !colored;
-                }
-            }
-        }
+        //            Tile tile = game.CurrentBoard.GetTile(i * TilesPerRow + j);
+        //            RenderTile(tile, colored);
+        //            colored = !colored;
+        //        }
+        //    }
+        //}
 
-        private void RenderTile(Tile tile, bool colored) {
+        public void RenderTile(Tile tile, bool colored) {
             Point screenPoint = Helper.Instance.ConvertTileCoordinateToScreenPoint(tile.Coordinate);
             Brush brush = colored ? Brushes.Coral : Brushes.Beige;
             Rectangle tileRectangle = new Rectangle() {
@@ -125,13 +125,10 @@ namespace chessui {
             this.ChessBoardCanvas.Children.Add(pieceImage);
 
         }
-
-
         #endregion
 
         private void ChessBoardCanvas_Loaded(object sender, RoutedEventArgs e) {
             Game = (Game)DataContext;
-            Render(Game);
         }
 
         private void ChessBoardCanvas_MouseDown(object sender, MouseButtonEventArgs e) {
