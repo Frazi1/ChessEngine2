@@ -16,13 +16,13 @@ namespace chessengine.pieces {
         public override ICollection<Move> CalculateLegalMoves(Board board) {
             List<Move> legasMoves = new List<Move>();
 
-            foreach (int currentCandidateOffset in CandidateMoveCoordinate) {
-                int candidateDestinationCoordinate = PiecePosition + currentCandidateOffset;
+            foreach (int candidateOffset in CandidateMoveCoordinate) {
 
-                if (IsEigthColumnExclusion(PiecePosition, currentCandidateOffset) ||
-                    IsFirstColumnExlusion(PiecePosition, currentCandidateOffset)) {
+                int candidateDestinationCoordinate = PiecePosition + candidateOffset;
+                if (IsEigthColumnExclusion(PiecePosition, candidateOffset)
+                    || IsFirstColumnExlusion(PiecePosition, candidateOffset))
                     continue;
-                }
+
                 if (!BoardUtils.IsValidCoordinate(candidateDestinationCoordinate)) continue;
 
                 Tile candidateDestinationTile = board.GetTile(candidateDestinationCoordinate);
@@ -48,14 +48,12 @@ namespace chessengine.pieces {
 
         private static bool IsFirstColumnExlusion(int currentPosition, int candidateOffset) {
             return BoardUtils.FirstColumn[currentPosition]
-                   && (candidateOffset == -9 || candidateOffset == -1 ||
-                       candidateOffset == 7);
+                   && (candidateOffset == -9 || candidateOffset == -1 || candidateOffset == 7);
         }
 
         private static bool IsEigthColumnExclusion(int currentPosition, int candidateOffset) {
-            return BoardUtils.EighthColumn[currentPosition]
-                   && (candidateOffset == -7 || candidateOffset == 1
-                       || candidateOffset == 9);
+            return BoardUtils.EighthColumn[currentPosition] &&
+                (candidateOffset == -7 || candidateOffset == 1 || candidateOffset == 9);
         }
 
         //public override string ToString() {

@@ -15,17 +15,18 @@ namespace chessengine.pieces {
 
         public override ICollection<Move> CalculateLegalMoves(Board board) {
             List<Move> legasMoves = new List<Move>();
-            foreach (int candidateCoordinateOffset in CandidateMoveVectorCoordinates) {
+            foreach (int candidateOffset in CandidateMoveVectorCoordinates) {
                 int candidateDestinationCoordinate = PiecePosition;
 
                 while (BoardUtils.IsValidCoordinate(candidateDestinationCoordinate)) {
-                    candidateDestinationCoordinate += candidateCoordinateOffset;
+
+                    if (IsFirstColumnExlusion(candidateDestinationCoordinate, candidateOffset)
+                        || IsEigthsColumnExlusion(candidateDestinationCoordinate, candidateOffset))
+                        break;
+                    candidateDestinationCoordinate += candidateOffset;
 
                     if (!BoardUtils.IsValidCoordinate(candidateDestinationCoordinate)) continue;
 
-                    if (IsFirstColumnExlusion(this.PiecePosition, candidateDestinationCoordinate)
-                        || IsEigthsColumnExlusion(PiecePosition, candidateDestinationCoordinate))
-                        continue;
 
                     Tile candidateDestinationTile = board.GetTile(candidateDestinationCoordinate);
 
@@ -55,7 +56,7 @@ namespace chessengine.pieces {
         }
 
         private static bool IsEigthsColumnExlusion(int currentPosition, int candidateOffset) {
-            return BoardUtils.FirstColumn[currentPosition] && candidateOffset == 1;
+            return BoardUtils.EighthColumn[currentPosition] && candidateOffset == 1;
         }
         
         //public override string ToString() {

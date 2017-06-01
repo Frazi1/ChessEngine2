@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using chessengine.board;
 using chessengine.board.moves;
@@ -24,8 +25,12 @@ namespace chessengine.pieces {
                     continue;
 
                 if (currentCandidateOffset == 8 && !board.GetTile(candidateDestinationCoordinate).IsTileOccupied) {
-                    //TODO:Promotion
-                    legalMoves.Add(new PawnMove(board, this, candidateDestinationCoordinate));
+                    if (CanPrommote(candidateDestinationCoordinate)) {
+                        legalMoves.Add(new PawnPromotion(board,
+                            new PawnMove(board, this, candidateDestinationCoordinate)));
+                    } else {
+                        legalMoves.Add(new PawnMove(board, this, candidateDestinationCoordinate));
+                    }
                 } else if (currentCandidateOffset == 16
                            && IsFirstMove
                            && (BoardUtils.SecondRank[PiecePosition] && PieceAlliance == Alliance.AllianceEnum.Black
@@ -33,7 +38,7 @@ namespace chessengine.pieces {
                     int behindCandidateDestination = PiecePosition + Alliance.GetDirection(PieceAlliance) * 8;
                     if (!board.GetTile(behindCandidateDestination).IsTileOccupied
                         && !board.GetTile(candidateDestinationCoordinate).IsTileOccupied) {
-                        legalMoves.Add(new /*MajorMove*/PawnJump(board, this, candidateDestinationCoordinate));
+                        legalMoves.Add(new PawnJump(board, this, candidateDestinationCoordinate));
                     }
                 } else if (currentCandidateOffset == 7
                            && !BoardUtils.EighthColumn[PiecePosition] && PieceAlliance == Alliance.AllianceEnum.White
@@ -46,8 +51,10 @@ namespace chessengine.pieces {
                     //AttackMove
                     if (!board.GetTile(candidateDestinationCoordinate).IsTileOccupied) continue;
                     Piece pieceOnCandidate = board.GetTile(candidateDestinationCoordinate).Piece;
-                    if (PieceAlliance != pieceOnCandidate.PieceAlliance) {
-                        //TODO more
+                    if (PieceAlliance == pieceOnCandidate.PieceAlliance) continue;
+                    if (CanPrommote(candidateDestinationCoordinate)) {
+                        legalMoves.Add(new PawnPromotion(board, new PawnAttackMove(board, this, candidateDestinationCoordinate, pieceOnCandidate)));
+                    } else {
                         legalMoves.Add(new PawnAttackMove(board,
                             this,
                             candidateDestinationCoordinate,
@@ -64,8 +71,11 @@ namespace chessengine.pieces {
                     //AttackMove
                     if (!board.GetTile(candidateDestinationCoordinate).IsTileOccupied) continue;
                     Piece pieceOnCandidate = board.GetTile(candidateDestinationCoordinate).Piece;
-                    if (PieceAlliance != pieceOnCandidate.PieceAlliance) {
-                        //TODO more
+                    if (PieceAlliance == pieceOnCandidate.PieceAlliance) continue;
+                    if (CanPrommote(candidateDestinationCoordinate)) {
+                        legalMoves.Add(new PawnPromotion(board,
+                            new PawnAttackMove(board, this, candidateDestinationCoordinate, pieceOnCandidate)));
+                    } else {
                         legalMoves.Add(new PawnAttackMove(board,
                             this,
                             candidateDestinationCoordinate,
@@ -77,10 +87,29 @@ namespace chessengine.pieces {
             return ImmutableList.CreateRange(legalMoves);
         }
 
+        private bool CanPrommote(int candidateDestinationCoordinate) {
+            return BoardUtils.FirstRank[candidateDestinationCoordinate] && PieceAlliance == Alliance.AllianceEnum.White
+                || BoardUtils.EigthRank[candidateDestinationCoordinate] && PieceAlliance == Alliance.AllianceEnum.Black;
+        }
+
         public override Piece MovePiece(Move move) {
             return new Pawn(move.DestinationCoordinate, false, move.MovedPiece.PieceAlliance);
         }
 
+        public Piece GetPrommotion(PieceType pieceType) {
+            switch (pieceType) {
+                case PieceType.Rook:
+                    return new Rook(PiecePosition, IsFirstMove, PieceAlliance);
+                case PieceType.Knight:
+                    return new Knight(PiecePosition, IsFirstMove, PieceAlliance);
+                case PieceType.Bishop:
+                    return new Bishop(PiecePosition, IsFirstMove, PieceAlliance);
+                case PieceType.Queen:
+                    return new Queen(PiecePosition, IsFirstMove, PieceAlliance);
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(pieceType), pieceType, null);
+            }
+        }
         //public override string ToString() {
         //    return PieceType.Pawn.ToText();
         //}

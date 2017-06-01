@@ -6,7 +6,7 @@ using chessengine.Extensions.EnumExtensions;
 
 namespace chessengine.pieces {
     public class Bishop : Piece {
-        private static readonly int[] CandidateMoveVectorCoordinates = {-9, -7, 7, 9};
+        private static readonly int[] CandidateMoveVectorCoordinates = { -9, -7, 7, 9 };
 
         public Bishop(int piecePosition, bool isFirstMove, Alliance.AllianceEnum pieceAlliance)
             : base(piecePosition, isFirstMove, pieceAlliance, PieceType.Bishop) {
@@ -14,17 +14,18 @@ namespace chessengine.pieces {
 
         public override ICollection<Move> CalculateLegalMoves(Board board) {
             List<Move> legasMoves = new List<Move>();
-            foreach (int candidateCoordinateOffset in CandidateMoveVectorCoordinates) {
+            foreach (int coordinateOffset in CandidateMoveVectorCoordinates) {
                 int candidateDestinationCoordinate = PiecePosition;
 
                 while (BoardUtils.IsValidCoordinate(candidateDestinationCoordinate)) {
-                    candidateDestinationCoordinate += candidateCoordinateOffset;
+                    if (IsFirstColumnExlusion(candidateDestinationCoordinate, coordinateOffset)
+                        || IsEightsColumnExlusion(candidateDestinationCoordinate, coordinateOffset))
+                        break;
+                    candidateDestinationCoordinate += coordinateOffset;
 
                     if (!BoardUtils.IsValidCoordinate(candidateDestinationCoordinate)) continue;
 
-                    if (IsFirstColumnExlusion(this.PiecePosition, candidateDestinationCoordinate)
-                        || IsEigthsColumnExlusion(PiecePosition, candidateDestinationCoordinate))
-                        continue;
+
 
                     Tile candidateDestinationTile = board.GetTile(candidateDestinationCoordinate);
 
@@ -46,15 +47,15 @@ namespace chessengine.pieces {
         }
 
         public override Piece MovePiece(Move move) {
-            return new Bishop(move.DestinationCoordinate,false, move.MovedPiece.PieceAlliance);
+            return new Bishop(move.DestinationCoordinate, false, move.MovedPiece.PieceAlliance);
         }
 
-        private bool IsFirstColumnExlusion(int currentPosition, int candidateOffset) {
+        private static bool IsFirstColumnExlusion(int currentPosition, int candidateOffset) {
             return BoardUtils.FirstColumn[currentPosition] && (candidateOffset == -9 || candidateOffset == 7);
         }
 
-        private bool IsEigthsColumnExlusion(int currentPosition, int candidateOffset) {
-            return BoardUtils.FirstColumn[currentPosition] && (candidateOffset == -7 || candidateOffset == 9);
+        private static bool IsEightsColumnExlusion(int currentPosition, int candidateOffset) {
+            return BoardUtils.EighthColumn[currentPosition] && (candidateOffset == -7 || candidateOffset == 9);
         }
 
         //public override string ToString() {

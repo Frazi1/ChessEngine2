@@ -16,7 +16,6 @@ namespace chessengine.pieces {
         protected Piece(int piecePosition,bool isFirstMove, Alliance.AllianceEnum pieceAlliance, PieceType pieceType) {
             PiecePosition = piecePosition;
             PieceAlliance = pieceAlliance;
-            //TODO: more work
             IsFirstMove = isFirstMove;
             PieceType = pieceType;
         }

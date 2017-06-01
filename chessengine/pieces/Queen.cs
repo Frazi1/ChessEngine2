@@ -15,17 +15,18 @@ namespace chessengine.pieces {
 
         public override ICollection<Move> CalculateLegalMoves(Board board) {
             List<Move> legasMoves = new List<Move>();
-            foreach (int candidateCoordinateOffset in CandidateMoveVectorCoordinates) {
+            foreach (int candidateOffset in CandidateMoveVectorCoordinates) {
                 int candidateDestinationCoordinate = PiecePosition;
 
                 while (BoardUtils.IsValidCoordinate(candidateDestinationCoordinate)) {
-                    candidateDestinationCoordinate += candidateCoordinateOffset;
+                    if (IsFirstColumnExlusion(candidateDestinationCoordinate, candidateOffset)
+                        || IsEigthsColumnExlusion(candidateDestinationCoordinate, candidateOffset))
+                        break;
+                    candidateDestinationCoordinate += candidateOffset;
 
                     if (!BoardUtils.IsValidCoordinate(candidateDestinationCoordinate)) continue;
 
-                    if (IsFirstColumnExlusion(this.PiecePosition, candidateDestinationCoordinate)
-                        || IsEigthsColumnExlusion(PiecePosition, candidateDestinationCoordinate))
-                        continue;
+
 
                     Tile candidateDestinationTile = board.GetTile(candidateDestinationCoordinate);
 
@@ -35,7 +36,7 @@ namespace chessengine.pieces {
                         Piece pieceAtDestination = candidateDestinationTile.Piece;
                         Alliance.AllianceEnum pieceAlliance = pieceAtDestination.PieceAlliance;
 
-                        if (this.PieceAlliance != pieceAlliance) {
+                        if (PieceAlliance != pieceAlliance) {
                             legasMoves.Add(new AttackMove(board, this, candidateDestinationCoordinate, pieceAtDestination));
                         }
                         break;
