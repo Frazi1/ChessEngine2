@@ -2,9 +2,9 @@
 
 namespace chessengine.board.moves.castle {
     public abstract class CastleMove : Move {
-        public Rook CastleRook { get; }
-        public int CastleRookStart { get; }
-        public int CastleRookDestination { get; }
+        public Rook CastleRook { get; private set; }
+        public int CastleRookStart { get; private set; }
+        public int CastleRookDestination { get; private set; }
 
         public CastleMove(Board board, Piece movedPiece, int destinationCoordinate, Rook castleRook,
             int castleRookStart, int castleRookDestination)

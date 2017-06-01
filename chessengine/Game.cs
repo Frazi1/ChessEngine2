@@ -11,7 +11,7 @@ namespace chessengine {
     public class Game {
         private Board _currentBoard;
 
-        public List<Board> Boards { get; }
+        public List<Board> Boards { get; private set; }
         public event Action BoardChanged;
         public Board CurrentBoard {
             get { return _currentBoard; }

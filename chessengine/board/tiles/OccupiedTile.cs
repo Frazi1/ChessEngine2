@@ -2,10 +2,11 @@
 
 namespace chessengine.board.tiles {
     public class OccupiedTile : Tile {
-        public override Piece Piece { get; }
+        private Piece _piece;
+        public override Piece Piece { get { return _piece; } }
 
         public OccupiedTile(int coordinate, Piece piece) : base(coordinate) {
-            Piece = piece;
+            _piece = piece;
         }
 
         public override bool IsTileOccupied {

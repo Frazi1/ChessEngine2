@@ -2,9 +2,9 @@ using chessengine.pieces;
 
 namespace chessengine.board.moves {
     public abstract class Move {
-        protected Board Board { get; }
-        public Piece MovedPiece { get; }
-        public int DestinationCoordinate { get; }
+        protected Board Board { get; private set; }
+        public Piece MovedPiece { get; private set; }
+        public int DestinationCoordinate { get; private set; }
         public int CurrentCoordinate { get { return MovedPiece.PiecePosition; }}
 
         public static readonly Move NullMove = new NullMove();

@@ -3,7 +3,7 @@ using chessengine.pieces;
 
 namespace chessengine.board {
     public class Builder {
-        public Dictionary<int, Piece> BoardConfig { get; }
+        public Dictionary<int, Piece> BoardConfig { get; private set; }
         public Alliance.AllianceEnum NextMoveMaker { get; private set; }
         public Pawn EnPassantPawn { get; private set; }
 

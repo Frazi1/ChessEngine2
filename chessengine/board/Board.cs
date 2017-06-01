@@ -13,14 +13,14 @@ namespace chessengine.board {
     public class Board {
         private readonly IList<Tile> _gameBoard;
 
-        public ICollection<Piece> WhitePieces { get; }
-        public ICollection<Piece> BlackPieces { get; }
+        public ICollection<Piece> WhitePieces { get; private set; }
+        public ICollection<Piece> BlackPieces { get; private set; }
 
-        public Player WhitePlayer { get; }
-        public Player BlackPlayer { get; }
-        public Player CurrentPlayer { get; }
+        public Player WhitePlayer { get; private set; }
+        public Player BlackPlayer { get; private set; }
+        public Player CurrentPlayer { get; private set; }
 
-        public Pawn EnPassantPawn { get; }
+        public Pawn EnPassantPawn { get; private set; }
 
         public Board(Builder builder) {
             _gameBoard = CreateTilesList(builder);
@@ -43,15 +43,11 @@ namespace chessengine.board {
         }
 
         private ICollection<Move> CalculateLegalMoves(ICollection<Piece> pieces) {
-            if (pieces == null) throw new ArgumentNullException(nameof(pieces));
-            if (pieces.Count == 0) throw new ArgumentException("Value cannot be an empty collection.", nameof(pieces));
             return pieces.SelectMany(p => p.CalculateLegalMoves(this))
                 .ToImmutableList();
         }
 
         private ICollection<Piece> CalculateActivePieces(IList<Tile> tiles, Alliance.AllianceEnum alliance) {
-            if (tiles == null) throw new ArgumentNullException(nameof(tiles));
-            if (tiles.Count == 0) throw new ArgumentException("Value cannot be an empty collection.", nameof(tiles));
             return tiles
                 .Where(t => t.Piece != null)
                 .Select(t => t.Piece)

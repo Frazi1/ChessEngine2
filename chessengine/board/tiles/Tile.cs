@@ -4,17 +4,18 @@ using chessengine.pieces;
 
 namespace chessengine.board.tiles {
     public abstract class Tile {
+        private bool _isTileOccupied = false;
+        private Piece _piece;
+
+        public int Coordinate { get; private set; }
+        public virtual bool IsTileOccupied { get { return _isTileOccupied; } }
+        public virtual Piece Piece { get { return _piece; } }
+
         public static readonly IDictionary<int, EmptyTile> EmptyTilesCache = CreateAllPossibleEmptyTiles();
 
         protected Tile(int coordinate) {
             Coordinate = coordinate;
         }
-
-        public int Coordinate { get; }
-
-        public abstract bool IsTileOccupied { get; }
-
-        public abstract Piece Piece { get; }
 
         private static IDictionary<int, EmptyTile> CreateAllPossibleEmptyTiles() {
             Dictionary<int, EmptyTile> emptyTilesDictionary = new Dictionary<int, EmptyTile>();
