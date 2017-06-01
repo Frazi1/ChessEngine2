@@ -18,7 +18,7 @@ namespace chessengine.board.moves {
 
         public override Board Execute() {
             Builder builder = new Builder();
-            foreach (Piece piece in this.Board.CurrentPlayer.ActivePieces) {
+            foreach (Piece piece in Board.CurrentPlayer.ActivePieces) {
                 if (!MovedPiece.Equals(piece)) {
                     builder.SetPiece(piece);
                 }

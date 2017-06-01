@@ -64,6 +64,7 @@
     <Compile Include="board\moves\pawn\PawnEnPassantAttackMove.cs" />
     <Compile Include="board\moves\pawn\PawnJump.cs" />
     <Compile Include="board\moves\pawn\PawnMove.cs" />
+    <Compile Include="board\moves\pawn\PawnPromotion.cs" />
     <Compile Include="board\tiles\EmptyTile.cs" />
     <Compile Include="board\tiles\OccupiedTile.cs" />
     <Compile Include="Game.cs" />

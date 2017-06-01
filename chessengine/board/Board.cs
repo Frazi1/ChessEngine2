@@ -43,8 +43,11 @@ namespace chessengine.board {
         }
 
         private ICollection<Move> CalculateLegalMoves(ICollection<Piece> pieces) {
-            return pieces.SelectMany(p => p.CalculateLegalMoves(this))
-                .ToImmutableList();
+            List<Move> list = new List<Move>();
+            foreach (Piece p in pieces)
+                foreach (Move move in p.CalculateLegalMoves(this))
+                    list.Add(move);
+            return list;
         }
 
         private ICollection<Piece> CalculateActivePieces(IList<Tile> tiles, Alliance.AllianceEnum alliance) {
@@ -58,8 +61,8 @@ namespace chessengine.board {
         private static IList<Tile> CreateTilesList(Builder builder) {
             Tile[] tiles = new Tile[BoardUtils.NumTiles];
             for (int i = 0; i < BoardUtils.NumTiles; i++) {
-                Piece piece = builder.BoardConfig.ContainsKey(i) 
-                    ? builder.BoardConfig[i] 
+                Piece piece = builder.BoardConfig.ContainsKey(i)
+                    ? builder.BoardConfig[i]
                     : null;
                 tiles[i] = Tile.CreateTile(i, piece);
             }

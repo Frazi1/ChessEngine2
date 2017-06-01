@@ -28,9 +28,11 @@ namespace chessengine.player {
 
         protected static ICollection<Move> CalculateAttacksOnTile(int piecePosition,
             ICollection<Move> opponentMoves) {
-            List<Move> attackMoves = opponentMoves
-                .Where(opponentMove => piecePosition == opponentMove.DestinationCoordinate)
-                .ToList();
+            List<Move> attackMoves = new List<Move>();
+            foreach (Move opponentMove in opponentMoves) {
+                if (piecePosition == opponentMove.DestinationCoordinate)
+                    attackMoves.Add(opponentMove);
+            }
             return ImmutableList.CreateRange(attackMoves);
         }
 
@@ -57,10 +59,11 @@ namespace chessengine.player {
 
 
         private ICollection<Move> GetEscapeMoves() {
-            List<Move> escapeMoves = LegalMoves
-                .Select(move => new {move, transition = MakeMove(move)})
-                .Where(t => t.transition.MoveStatus == MoveStatus.Done)
-                .Select(t => t.move).ToList();
+            List<Move> escapeMoves = new List<Move>();
+            foreach (Move move in LegalMoves) {
+                MoveTransition transition = MakeMove(move);
+                if (transition.MoveStatus == MoveStatus.Done) escapeMoves.Add(move);
+            }
             return ImmutableList.CreateRange(escapeMoves);
         }
 
