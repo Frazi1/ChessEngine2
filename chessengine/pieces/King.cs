@@ -3,7 +3,6 @@ using System.Collections.Immutable;
 using chessengine.board;
 using chessengine.board.moves;
 using chessengine.board.tiles;
-using chessengine.Extensions.EnumExtensions;
 
 namespace chessengine.pieces {
     public class King : Piece {

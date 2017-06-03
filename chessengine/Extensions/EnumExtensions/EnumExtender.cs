@@ -8,9 +8,19 @@ namespace chessengine.Extensions.EnumExtensions {
 
             if (memberInfo.Length <= 0) return enumeration.ToString();
             object[] attributes = memberInfo[0].GetCustomAttributes(typeof(TextAttribute), false);
-            return attributes.Length > 0 
-                ? ((TextAttribute) attributes[0]).Text
+            return attributes.Length > 0
+                ? ((TextAttribute)attributes[0]).Text
                 : enumeration.ToString();
+        }
+
+        public static int GetValue(this Enum enumeration) {
+            MemberInfo[] memberInfo = enumeration.GetType().GetMember(enumeration.ToString());
+            if (memberInfo.Length <= 0) throw new Exception(
+                string.Format("{0} не содержит значения {1}", enumeration, nameof(ValueAttribute)));
+            object[] attributes = memberInfo[0].GetCustomAttributes(typeof(ValueAttribute), false);
+            if (attributes.Length <= 0) throw new Exception(
+                string.Format("{0} не содержит значения {1}", enumeration, nameof(ValueAttribute)));
+            return ((ValueAttribute)attributes[0]).Value;
         }
     }
 }
