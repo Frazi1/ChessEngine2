@@ -19,7 +19,7 @@ namespace chessengine.pieces {
 
                 while (BoardUtils.IsValidCoordinate(candidateDestinationCoordinate)) {
                     if (IsFirstColumnExlusion(candidateDestinationCoordinate, candidateOffset)
-                        || IsEigthsColumnExlusion(candidateDestinationCoordinate, candidateOffset))
+                        || IsEightsColumnExlusion(candidateDestinationCoordinate, candidateOffset))
                         break;
                     candidateDestinationCoordinate += candidateOffset;
 
@@ -55,8 +55,8 @@ namespace chessengine.pieces {
                 (candidateOffset == -9 || candidateOffset == 7 || candidateOffset == -1);
         }
 
-        private static bool IsEigthsColumnExlusion(int currentPosition, int candidateOffset) {
-            return BoardUtils.FirstColumn[currentPosition] &&
+        private static bool IsEightsColumnExlusion(int currentPosition, int candidateOffset) {
+            return BoardUtils.EighthColumn[currentPosition] &&
                 (candidateOffset == 1 || candidateOffset == -7 || candidateOffset == 9);
         }
 
