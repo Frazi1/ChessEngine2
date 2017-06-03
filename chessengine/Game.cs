@@ -6,13 +6,15 @@ using chessengine.board;
 using chessengine.board.moves;
 using chessengine.board.tiles;
 using chessengine.player;
+using chessengine.player.AI;
+using chessengine.player.AI.Minimax;
 
 namespace chessengine {
     public class Game {
         private Board _currentBoard;
+        private IStrategy _strategy = new Minimax(1);
 
         public List<Board> Boards { get; private set; }
-        public event Action BoardChanged;
         public Board CurrentBoard {
             get { return _currentBoard; }
             private set {
@@ -21,6 +23,8 @@ namespace chessengine {
                 OnBoardChanged();
             }
         }
+
+        public event Action BoardChanged;
 
         public static int NumTilesPerRow { get { return BoardUtils.NumTilesPerRow; } }
         public static int NumTiles { get { return BoardUtils.NumTiles; } }
@@ -39,6 +43,13 @@ namespace chessengine {
 
         public MoveStatus DoMove(int currentCoordinate, int destinationCoordinate) {
             Move move = MoveFactory.FindMove(CurrentBoard, currentCoordinate, destinationCoordinate);
+            MoveTransition moveTransition = CurrentBoard.CurrentPlayer.MakeMove(move);
+            CurrentBoard = moveTransition.TransitionBoard;
+            return moveTransition.MoveStatus;
+        }
+
+        public MoveStatus DoStrategyMove() {
+            Move move = _strategy.SelectMove(CurrentBoard, CurrentBoard.CurrentPlayer);
             MoveTransition moveTransition = CurrentBoard.CurrentPlayer.MakeMove(move);
             CurrentBoard = moveTransition.TransitionBoard;
             return moveTransition.MoveStatus;
