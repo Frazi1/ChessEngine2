@@ -84,9 +84,13 @@ namespace chessengine.player.AI {
             return alliance == Alliance.AllianceEnum.White
                 ? piecePosition
                 : BoardUtils.NumTiles - piecePosition;
+            //return alliance == Alliance.AllianceEnum.White
+            //    ? piecePosition
+            //    : (byte)(((byte)(piecePosition + 56)) - (byte)((byte)(piecePosition / 8) * 16));
         }
 
-        public int Evaluate(Board board, Player player) {
+        public int Evaluate(Board board, Alliance.AllianceEnum alliance) {
+            Player player = alliance == Alliance.AllianceEnum.Black ? board.BlackPlayer : board.WhitePlayer;
             int score1 = 0;
             foreach (Piece piece in player.ActivePieces) {
                 score1 += piece.PieceType.GetValue();

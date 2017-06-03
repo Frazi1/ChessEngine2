@@ -32,7 +32,7 @@ namespace chessengine.player.AI.Minimax {
             foreach (Move move in board.CurrentPlayer.LegalMoves) {
                 MoveTransition moveTransition = board.CurrentPlayer.MakeMove(move);
                 if (moveTransition.MoveStatus != MoveStatus.Done) continue;
-                int currentValue = Max(moveTransition.TransitionBoard, board.CurrentPlayer, Depth);
+                int currentValue = Max(moveTransition.TransitionBoard, board.CurrentPlayer.PlayerAlliance, Depth);
                 if (currentValue < maxValue) continue;
                 maxValue = currentValue;
                 bestMove = move;
@@ -40,29 +40,29 @@ namespace chessengine.player.AI.Minimax {
             return bestMove;
         }
 
-        private int Min(Board board, Player player, int depth) {
+        private int Min(Board board, Alliance.AllianceEnum alliance, int depth) {
             if (depth == 0 /*|| gameover*/) {
-                return BoardEvaluator.Evaluate(board, player);
+                return BoardEvaluator.Evaluate(board, alliance);
             }
             int min = int.MaxValue;
             foreach (Move move in board.CurrentPlayer.LegalMoves) {
                 MoveTransition moveTransition = board.CurrentPlayer.MakeMove(move);
                 if (moveTransition.MoveStatus != MoveStatus.Done) continue;
-                int currentValue = Max(moveTransition.TransitionBoard, player, depth - 1);
+                int currentValue = Max(moveTransition.TransitionBoard, alliance, depth - 1);
                 min = Math.Min(min, currentValue);
             }
             return min;
         }
 
-        private int Max(Board board, Player player, int depth) {
+        private int Max(Board board, Alliance.AllianceEnum alliance, int depth) {
             if (depth == 0) {
-                return BoardEvaluator.Evaluate(board, player);
+                return BoardEvaluator.Evaluate(board, alliance);
             }
             int max = int.MinValue;
             foreach (Move move in board.CurrentPlayer.LegalMoves) {
                 MoveTransition moveTransition = board.CurrentPlayer.MakeMove(move);
                 if (moveTransition.MoveStatus != MoveStatus.Done) continue;
-                int currentValue = Min(moveTransition.TransitionBoard, player, depth - 1);
+                int currentValue = Min(moveTransition.TransitionBoard, alliance, depth - 1);
                 max = Math.Max(currentValue, max);
             }
             return max;

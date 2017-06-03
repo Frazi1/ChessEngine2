@@ -30,11 +30,6 @@ namespace chessui.Controller {
             ChessBoard.Loaded += ChessBoard_Loaded;
         }
 
-
-        private void ChessBoard_KeyDown(object sender, KeyEventArgs e) {
-            throw new NotImplementedException();
-        }
-
         private void ChessBoard_MouseDown(object sender, MouseButtonEventArgs e) {
             if (e.LeftButton == MouseButtonState.Pressed) {
                 if (SelectedTile == null) {
