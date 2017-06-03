@@ -8,7 +8,7 @@ namespace chessengine.board.moves {
         }
 
         public override string ToString() {
-            return String.Concat(this.MovedPiece.ToString(), CurrentCoordinate, DestinationCoordinate);
+            return string.Concat(MovedPiece.ToString(), CurrentCoordinate," - ", DestinationCoordinate);
         }
     }
 }

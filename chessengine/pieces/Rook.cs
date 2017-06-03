@@ -2,7 +2,6 @@
 using chessengine.board;
 using chessengine.board.moves;
 using chessengine.board.tiles;
-using chessengine.Extensions.EnumExtensions;
 
 namespace chessengine.pieces {
     public class Rook : Piece {
@@ -36,7 +35,7 @@ namespace chessengine.pieces {
                         Piece pieceAtDestination = candidateDestinationTile.Piece;
                         Alliance.AllianceEnum pieceAlliance = pieceAtDestination.PieceAlliance;
 
-                        if (this.PieceAlliance != pieceAlliance) {
+                        if (PieceAlliance != pieceAlliance) {
                             legasMoves.Add(new AttackMove(board, this, candidateDestinationCoordinate, pieceAtDestination));
                         }
                         break;

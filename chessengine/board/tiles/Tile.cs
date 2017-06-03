@@ -11,7 +11,7 @@ namespace chessengine.board.tiles {
         public virtual bool IsTileOccupied { get { return _isTileOccupied; } }
         public virtual Piece Piece { get { return _piece; } }
 
-        public static readonly IDictionary<int, EmptyTile> EmptyTilesCache = CreateAllPossibleEmptyTiles();
+        private static readonly IDictionary<int, EmptyTile> EmptyTilesCache = CreateAllPossibleEmptyTiles();
 
         protected Tile(int coordinate) {
             Coordinate = coordinate;

@@ -2,7 +2,7 @@ using chessengine.pieces;
 
 namespace chessengine.board.moves {
     public class AttackMove : Move {
-        public Piece AttackedPiece { get; private set; }
+        protected Piece AttackedPiece { get; private set; }
 
         public AttackMove(Board board,
             Piece movedPiece,
@@ -14,6 +14,10 @@ namespace chessengine.board.moves {
 
         public override Piece GetAttackedPiece() {
             return AttackedPiece;
+        }
+
+        public override bool IsAttackMove() {
+            return true;
         }
 
         public override Board Execute() {

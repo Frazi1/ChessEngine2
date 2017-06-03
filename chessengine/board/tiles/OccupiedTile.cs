@@ -14,9 +14,6 @@ namespace chessengine.board.tiles {
         }
 
         public override string ToString() {
-            //return Alliance.IsBlack(Piece.PieceAlliance)
-            //    ? Piece.ToString().ToLower()
-            //    : Piece.ToString();
             return Piece.ToString();
         }
     }

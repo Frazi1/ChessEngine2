@@ -1,5 +1,4 @@
 ﻿using System;
-using chessengine.pieces;
 
 namespace chessengine.board.moves {
     public class NullMove : Move {

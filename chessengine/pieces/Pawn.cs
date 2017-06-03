@@ -4,7 +4,6 @@ using System.Collections.Immutable;
 using chessengine.board;
 using chessengine.board.moves;
 using chessengine.board.moves.pawn;
-using chessengine.Extensions.EnumExtensions;
 
 namespace chessengine.pieces {
     public class Pawn : Piece {

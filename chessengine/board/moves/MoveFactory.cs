@@ -1,6 +1,6 @@
 ﻿namespace chessengine.board.moves {
     public static class MoveFactory {
-        public static Move CreateMove(Board board, int currentCoordinate, int destinationCoordinate) {
+        public static Move FindMove(Board board, int currentCoordinate, int destinationCoordinate) {
             foreach (Move move in board.GetAllLegalMoves()) {
                 if (move.CurrentCoordinate == currentCoordinate &&
                     move.DestinationCoordinate == destinationCoordinate) {

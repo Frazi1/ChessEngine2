@@ -38,7 +38,7 @@ namespace chessengine {
         }
 
         public MoveStatus DoMove(int currentCoordinate, int destinationCoordinate) {
-            Move move = MoveFactory.CreateMove(CurrentBoard, currentCoordinate, destinationCoordinate);
+            Move move = MoveFactory.FindMove(CurrentBoard, currentCoordinate, destinationCoordinate);
             MoveTransition moveTransition = CurrentBoard.CurrentPlayer.MakeMove(move);
             CurrentBoard = moveTransition.TransitionBoard;
             return moveTransition.MoveStatus;

@@ -2,7 +2,6 @@
 using chessengine.board;
 using chessengine.board.moves;
 using chessengine.board.tiles;
-using chessengine.Extensions.EnumExtensions;
 
 namespace chessengine.pieces {
     public class Queen : Piece {
@@ -46,9 +45,9 @@ namespace chessengine.pieces {
             }
             return legasMoves;
         }
-        
+
         public override Piece MovePiece(Move move) {
-            return new Queen(move.DestinationCoordinate,false, move.MovedPiece.PieceAlliance);
+            return new Queen(move.DestinationCoordinate, false, move.MovedPiece.PieceAlliance);
         }
 
         private static bool IsFirstColumnExlusion(int currentPosition, int candidateOffset) {
@@ -60,7 +59,7 @@ namespace chessengine.pieces {
             return BoardUtils.FirstColumn[currentPosition] &&
                 (candidateOffset == 1 || candidateOffset == -7 || candidateOffset == 9);
         }
-        
+
         //public override string ToString() {
         //    return PieceType.Queen.ToText();
         //}

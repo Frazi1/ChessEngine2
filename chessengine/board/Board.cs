@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
@@ -47,10 +46,10 @@ namespace chessengine.board {
             foreach (Piece p in pieces)
                 foreach (Move move in p.CalculateLegalMoves(this))
                     list.Add(move);
-            return list;
+            return list.ToImmutableList();
         }
 
-        private ICollection<Piece> CalculateActivePieces(IList<Tile> tiles, Alliance.AllianceEnum alliance) {
+        private static ICollection<Piece> CalculateActivePieces(IEnumerable<Tile> tiles, Alliance.AllianceEnum alliance) {
             return tiles
                 .Where(t => t.Piece != null)
                 .Select(t => t.Piece)
