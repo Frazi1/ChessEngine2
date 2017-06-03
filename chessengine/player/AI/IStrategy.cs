@@ -3,6 +3,6 @@ using chessengine.board.moves;
 
 namespace chessengine.player.AI {
     public interface IStrategy {
-        Move SelectMove(Board board, Alliance.AllianceEnum alliance);
+        Move SelectMove(Board board, Player player);
     }
 }

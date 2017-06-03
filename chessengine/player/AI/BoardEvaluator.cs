@@ -1,4 +1,8 @@
-﻿using chessengine.board;
+﻿using System.Collections.Generic;
+using System.Data.SqlClient;
+using chessengine.board;
+using chessengine.Extensions.EnumExtensions;
+using chessengine.pieces;
 
 namespace chessengine.player.AI {
     public class BoardEvaluator : IBoardEvaluator {
@@ -51,6 +55,7 @@ namespace chessengine.player.AI {
             20,  30,  10,   0,   0,  10,  30,  20
         };
 
+        //NotUsed
         private static readonly short[] KingTableEndGame = new short[]
         {
             -50,-40,-30,-20,-20,-30,-40,-50,
@@ -63,15 +68,40 @@ namespace chessengine.player.AI {
             -50,-30,-30,-30,-30,-30,-30,-50
         };
 
+        public Dictionary<PieceType,short[]> Tables { get; private set; }
+
+        public BoardEvaluator() {
+            Tables = new Dictionary<PieceType, short[]>();
+            Tables.Add(PieceType.Pawn, PawnTable);
+            Tables.Add(PieceType.Knight, KnightTable);
+            Tables.Add(PieceType.Bishop, BishopTable);
+            Tables.Add(PieceType.King, KingTable);
+        }
+
+
         private static int ConvertIndex(int piecePosition, Alliance.AllianceEnum alliance) {
-            //TODO: fix
+            //TODO: fix ? test
             return alliance == Alliance.AllianceEnum.White
                 ? piecePosition
                 : BoardUtils.NumTiles - piecePosition;
         }
 
-        public int Evaluate(Board board, Alliance.AllianceEnum alliance) {
-            throw new System.NotImplementedException();
+        public int Evaluate(Board board, Player player) {
+            int score1 = 0;
+            foreach (Piece piece in player.ActivePieces) {
+                score1 += piece.PieceType.GetValue();
+                if (Tables.ContainsKey(piece.PieceType)) {
+                    score1 += Tables[piece.PieceType][ConvertIndex(piece.PiecePosition, piece.PieceAlliance)];
+                }
+            }
+            int score2 = 0;
+            foreach (Piece piece in player.Opponent.ActivePieces) {
+                score2 += piece.PieceType.GetValue();
+                if (Tables.ContainsKey(piece.PieceType)) {
+                    score2 += Tables[piece.PieceType][ConvertIndex(piece.PiecePosition, piece.PieceAlliance)];
+                }
+            }
+            return score1 - score2;
         }
 
 

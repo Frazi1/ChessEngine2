@@ -67,6 +67,7 @@
     <Compile Include="board\moves\pawn\PawnPromotion.cs" />
     <Compile Include="board\tiles\EmptyTile.cs" />
     <Compile Include="board\tiles\OccupiedTile.cs" />
+    <Compile Include="Extensions\EnumExtensions\ValueAttribute.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Extensions\EnumExtensions\EnumExtender.cs" />
     <Compile Include="Extensions\EnumExtensions\TextAttribute.cs" />
@@ -79,6 +80,10 @@
     <Compile Include="pieces\PieceType.cs" />
     <Compile Include="pieces\Queen.cs" />
     <Compile Include="pieces\Rook.cs" />
+    <Compile Include="player\AI\BoardEvaluator.cs" />
+    <Compile Include="player\AI\IBoardEvaluator.cs" />
+    <Compile Include="player\AI\IStrategy.cs" />
+    <Compile Include="player\AI\Minimax\Minimax.cs" />
     <Compile Include="player\BlackPlayer.cs" />
     <Compile Include="player\MoveStatus.cs" />
     <Compile Include="player\MoveTransition.cs" />

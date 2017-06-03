@@ -2,6 +2,6 @@
 
 namespace chessengine.player.AI {
     public  interface IBoardEvaluator {
-        int Evaluate(Board board, Alliance.AllianceEnum alliance);
+        int Evaluate(Board board, Player player);
     }
 }
