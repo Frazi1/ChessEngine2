@@ -22,7 +22,7 @@ namespace chessengine.pieces {
 
                 if (!BoardUtils.IsValidCoordinate(candidateDestinationCoordinate))
                     continue;
-
+                //MajorMove
                 if (currentCandidateOffset == 8 && !board.GetTile(candidateDestinationCoordinate).IsTileOccupied) {
                     if (CanPrommote(candidateDestinationCoordinate)) {
                         legalMoves.Add(new PawnPromotion(board,
@@ -30,6 +30,7 @@ namespace chessengine.pieces {
                     } else {
                         legalMoves.Add(new PawnMove(board, this, candidateDestinationCoordinate));
                     }
+                //Jump
                 } else if (currentCandidateOffset == 16
                            && IsFirstMove
                            && (BoardUtils.SecondRank[PiecePosition] && PieceAlliance == Alliance.AllianceEnum.Black
@@ -40,8 +41,8 @@ namespace chessengine.pieces {
                         legalMoves.Add(new PawnJump(board, this, candidateDestinationCoordinate));
                     }
                 } else if (currentCandidateOffset == 7
-                           && !BoardUtils.EighthColumn[PiecePosition] && PieceAlliance == Alliance.AllianceEnum.White
-                           || !BoardUtils.FirstColumn[PiecePosition] && PieceAlliance == Alliance.AllianceEnum.Black) {
+                           && (!BoardUtils.EighthColumn[PiecePosition] && PieceAlliance == Alliance.AllianceEnum.White
+                           || !BoardUtils.FirstColumn[PiecePosition] && PieceAlliance == Alliance.AllianceEnum.Black)) {
                     //EnPassantAttack
                     if (board.EnPassantPawn != null && board.EnPassantPawn.PiecePosition ==
                         PiecePosition + Alliance.GetOppositeDirection(PieceAlliance)) {
@@ -60,8 +61,8 @@ namespace chessengine.pieces {
                             board.GetTile(candidateDestinationCoordinate).Piece));
                     }
                 } else if (currentCandidateOffset == 9
-                           && !BoardUtils.FirstColumn[PiecePosition] && PieceAlliance == Alliance.AllianceEnum.White
-                           || !BoardUtils.EighthColumn[PiecePosition] && PieceAlliance == Alliance.AllianceEnum.Black) {
+                           && (!BoardUtils.FirstColumn[PiecePosition] && PieceAlliance == Alliance.AllianceEnum.White
+                           || !BoardUtils.EighthColumn[PiecePosition] && PieceAlliance == Alliance.AllianceEnum.Black)) {
                     //EnPassant
                     if (board.EnPassantPawn != null && board.EnPassantPawn.PiecePosition ==
                         PiecePosition - Alliance.GetOppositeDirection(PieceAlliance)) {

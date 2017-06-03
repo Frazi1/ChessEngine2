@@ -6,7 +6,7 @@ using chessengine.board.tiles;
 
 namespace chessengine.pieces {
     public class Knight : Piece {
-        private static readonly int[] CandidateMoveCoordinates = { -17, -15, -10, -6, 6, 10, 15, 17 };
+        private static readonly int[] CandidateOffsets = { -17, -15, -10, -6, 6, 10, 15, 17 };
 
         public Knight(int piecePosition, bool isFirstMove, Alliance.AllianceEnum pieceAlliance)
             : base(piecePosition, isFirstMove, pieceAlliance, PieceType.Knight) {
@@ -14,15 +14,15 @@ namespace chessengine.pieces {
 
         public override ICollection<Move> CalculateLegalMoves(Board board) {
             List<Move> legasMoves = new List<Move>();
-            foreach (int currentCandidatetOffset in CandidateMoveCoordinates) {
-                int candidateDestinationCoordinate = PiecePosition + currentCandidatetOffset;
+            foreach (int currentOffset in CandidateOffsets) {
+                int candidateDestinationCoordinate = PiecePosition + currentOffset;
 
                 if (!BoardUtils.IsValidCoordinate(candidateDestinationCoordinate)) continue;
 
-                if (IsFirstColumnExlusion(this.PiecePosition, currentCandidatetOffset)
-                    || IsSecondColumnExclusion(PiecePosition, candidateDestinationCoordinate)
-                    || IsSeventhColumnExclusion(PiecePosition, candidateDestinationCoordinate)
-                    || IsEigthColumnExclusion(PiecePosition, candidateDestinationCoordinate))
+                if (IsFirstColumnExlusion(PiecePosition, currentOffset)
+                    || IsSecondColumnExclusion(PiecePosition, currentOffset)
+                    || IsSeventhColumnExclusion(PiecePosition, currentOffset)
+                    || IsEigthColumnExclusion(PiecePosition, currentOffset))
                     continue;
 
                 Tile candidateDestinationTile = board.GetTile(candidateDestinationCoordinate);
