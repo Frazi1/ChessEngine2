@@ -1,3 +1,4 @@
+using System;
 using chessengine.board;
 using chessengine.board.moves;
 
@@ -11,6 +12,10 @@ namespace chessengine.player {
             TransitionBoard = transitionBoard;
             Move = move;
             MoveStatus = moveStatus;
+        }
+
+        public override string ToString() {
+            return string.Concat(Move, Environment.NewLine, MoveStatus);
         }
     }
 }

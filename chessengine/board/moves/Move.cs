@@ -62,7 +62,12 @@ namespace chessengine.board.moves {
             unchecked {
                 return ((MovedPiece != null ? MovedPiece.GetHashCode() : 0) * 397) ^ DestinationCoordinate;
             }
-        } 
+        }
         #endregion
+
+
+        public override string ToString() {
+            return string.Concat(MovedPiece.ToString(), CurrentCoordinate, " - ", DestinationCoordinate);
+        }
     }
 }

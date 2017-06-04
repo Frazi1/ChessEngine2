@@ -40,6 +40,23 @@ namespace chessengine.player.AI.Minimax {
             return bestMove;
         }
 
+        public Move SelectMoveParallel(Board board, Player player) {
+            object syncRoot = new object();
+            int maxValue = int.MinValue;
+            Move bestMove = Move.NullMove;
+            Parallel.ForEach(board.CurrentPlayer.LegalMoves, move => {
+                MoveTransition moveTransition = board.CurrentPlayer.MakeMove(move);
+                if (moveTransition.MoveStatus != MoveStatus.Done) return;
+                int currentValue = Max(moveTransition.TransitionBoard, board.CurrentPlayer.PlayerAlliance, Depth);
+                if (currentValue <= maxValue) return;
+                lock (syncRoot) {
+                    maxValue = currentValue;
+                    bestMove = move;
+                }
+            });
+            return bestMove;
+        }
+
         private int Min(Board board, Alliance.AllianceEnum alliance, int depth) {
             if (depth == 0 /*|| gameover*/) {
                 return BoardEvaluator.Evaluate(board, alliance);

@@ -26,7 +26,6 @@ namespace chessui.Controller {
         public ChessController(Game game, ChessBoard chessBoard) {
             Game = game;
             ChessBoard = chessBoard;
-            Game.BoardChanged += Game_BoardChanged;
             ChessBoard.Loaded += ChessBoard_Loaded;
         }
 
@@ -42,8 +41,9 @@ namespace chessui.Controller {
             } else if (e.RightButton == MouseButtonState.Pressed) {
                 //MessageBox.Show(Game.DoStrategyMove().ToString());
                 var moves = Helper.Instance.GetTileFromScreenPoint(Game, e.GetPosition(ChessBoard)).Piece
-                    .CalculateLegalMoves(Game.CurrentBoard);
+                    ?.CalculateLegalMoves(Game.CurrentBoard);
                 string res = string.Empty;
+                if(moves==null) return;
                 foreach (Move move in moves) {
                     res = String.Concat(res,move.ToString(), Environment.NewLine);
                 }
@@ -73,9 +73,11 @@ namespace chessui.Controller {
             RenderBoard(Game);
         }
         private void ChessBoard_Loaded(object sender, RoutedEventArgs e) {
-            RenderBoard(Game);
+            Game.BoardChanged += Game_BoardChanged;
             ChessBoard.MouseDown += ChessBoard_MouseDown;
-            ((Control) ((Grid) ChessBoard.Parent).Parent).KeyDown += ChessController_KeyDown;
+            //TODO: fix
+            ((Control)((Grid)ChessBoard.Parent).Parent).KeyDown += ChessController_KeyDown;
+            RenderBoard(Game);
 
         }
 

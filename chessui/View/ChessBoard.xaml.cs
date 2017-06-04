@@ -109,6 +109,12 @@ namespace chessui {
             };
             ChessBoardCanvas.Children.Add(tileRectangle);
 
+            TextBlock tb = new TextBlock {
+                Text = tile.Coordinate.ToString(),
+                Margin = new Thickness(screenPoint.X, screenPoint.Y, 0, 0)
+            };
+            ChessBoardCanvas.Children.Add(tb);
+
             if (tile.IsTileOccupied) {
                 RenderPiece(tile.Piece, screenPoint);
             }
