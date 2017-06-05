@@ -1,3 +1,4 @@
+using System;
 using chessengine.pieces;
 
 namespace chessengine.board.moves {
@@ -28,6 +29,8 @@ namespace chessengine.board.moves {
         }
 
         public virtual Board Execute() {
+            if (!CanExecute()) throw new Exception();
+            
             Builder builder = new Builder();
 
             foreach (Piece piece in Board.CurrentPlayer.ActivePieces) {
@@ -46,6 +49,14 @@ namespace chessengine.board.moves {
             return builder.Build();
         }
 
+        public virtual bool CanExecute() {
+            bool canExecute = MovedPiece.PieceAlliance == Board.CurrentPlayer.PlayerAlliance;
+            if (!canExecute) {
+                throw new Exception("Нельзя ходить чужой фигурой");
+            }
+            return canExecute;
+        }
+        
         #region Equality
         protected bool Equals(Move other) {
             return Equals(MovedPiece, other.MovedPiece) && DestinationCoordinate == other.DestinationCoordinate;
@@ -65,6 +76,7 @@ namespace chessengine.board.moves {
         }
         #endregion
 
+        
 
         public override string ToString() {
             return string.Concat(MovedPiece.ToString(), CurrentCoordinate, " - ", DestinationCoordinate);

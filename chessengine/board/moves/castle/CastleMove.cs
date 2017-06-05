@@ -1,4 +1,5 @@
-﻿using chessengine.pieces;
+﻿using System;
+using chessengine.pieces;
 
 namespace chessengine.board.moves.castle {
     public abstract class CastleMove : Move {
@@ -19,6 +20,8 @@ namespace chessengine.board.moves.castle {
         }
 
         public override Board Execute() {
+            if (!CanExecute()) throw new Exception();
+
             Builder builder = new Builder();
             foreach (Piece piece in Board.CurrentPlayer.ActivePieces) {
                 if (!MovedPiece.Equals(piece) && !CastleRook.Equals(piece)) {

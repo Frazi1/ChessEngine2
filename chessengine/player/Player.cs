@@ -61,6 +61,9 @@ namespace chessengine.player {
         private ICollection<Move> GetEscapeMoves() {
             List<Move> escapeMoves = new List<Move>();
             foreach (Move move in LegalMoves) {
+                if (move.MovedPiece.PieceType == PieceType.Bishop && move.DestinationCoordinate == 40) {
+                    object _break = 100;
+                }
                 MoveTransition transition = MakeMove(move);
                 if (transition.MoveStatus == MoveStatus.Done) escapeMoves.Add(move);
             }

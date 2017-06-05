@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Data.SqlClient;
 using chessengine.board;
 using chessengine.Extensions.EnumExtensions;
@@ -6,6 +7,10 @@ using chessengine.pieces;
 
 namespace chessengine.player.AI {
     public class BoardEvaluator : IBoardEvaluator {
+
+        private const int CheckBonus = 50;
+        private const int CheckMateBonus = 30000;
+        private const int CastledBonus = 100;
 
         private static readonly short[] PawnTable = new short[] {
             0, 0, 0, 0, 0, 0, 0, 0,
@@ -63,7 +68,7 @@ namespace chessengine.player.AI {
             -50, -30, -30, -30, -30, -30, -30, -50
         };
 
-        public Dictionary<PieceType, short[]> Tables { get; private set; }
+        public static Dictionary<PieceType, short[]> Tables { get; private set; }
 
         public BoardEvaluator() {
             Tables = new Dictionary<PieceType, short[]>();
@@ -92,15 +97,32 @@ namespace chessengine.player.AI {
             return score1 - score2;
         }
 
-        private int EvaluatePlayer(Player player) {
-         return PieceValue(player) + Mobility(player);
+        private static int EvaluatePlayer(Player player) {
+            return PieceValue(player)
+                   + Mobility(player)
+                   + Check(player)
+                   + CheckMate(player)
+                //+ Castled(player)
+                ;
         }
 
-        private int Mobility(Player player) {
+        private static int Castled(Player player) {
+            return player.IsCastled() ? CastledBonus : 0;
+        }
+
+        private static int CheckMate(Player player) {
+            return player.IsInCheckMate() ? CheckMateBonus : 0;
+        }
+
+        private static int Check(Player player) {
+            return player.IsInCheck ? CheckBonus : 0;
+        }
+
+        private static int Mobility(Player player) {
             return player.LegalMoves.Count;
         }
 
-        private int PieceValue(Player player) {
+        private static int PieceValue(Player player) {
             int score = 0;
             foreach (Piece piece in player.ActivePieces) {
                 score += piece.PieceType.GetValue();

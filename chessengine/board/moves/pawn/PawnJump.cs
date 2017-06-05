@@ -1,4 +1,5 @@
-﻿using chessengine.pieces;
+﻿using System;
+using chessengine.pieces;
 
 namespace chessengine.board.moves.pawn {
     public class PawnJump : Move {
@@ -7,6 +8,8 @@ namespace chessengine.board.moves.pawn {
         }
 
         public override Board Execute() {
+            if (!CanExecute()) throw new Exception();
+
             Builder builder = new Builder();
             foreach (Piece piece in Board.CurrentPlayer.ActivePieces) {
                 if (!MovedPiece.Equals(piece)) {

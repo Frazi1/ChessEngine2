@@ -69,9 +69,6 @@ namespace chessui.Controller {
             }
         }
 
-        private void Game_BoardChanged() {
-            RenderBoard(Game);
-        }
         private void ChessBoard_Loaded(object sender, RoutedEventArgs e) {
             Game.BoardChanged += Game_BoardChanged;
             ChessBoard.MouseDown += ChessBoard_MouseDown;
@@ -81,8 +78,17 @@ namespace chessui.Controller {
 
         }
 
+        private void Game_BoardChanged(object sender, BoardChangedArgs args) {
+            RenderBoard(Game);
+            if (args.IsGameOver) {
+                MessageBox.Show("CheckMate");
+            }
+        }
+
         private void ChessController_KeyDown(object sender, KeyEventArgs e) {
-            MessageBox.Show(Game.DoStrategyMove().ToString());
+            if (e.Key == Key.Enter) {
+                MessageBox.Show(Game.DoStrategyMove().ToString());
+            }
         }
     }
 }

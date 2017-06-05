@@ -1,3 +1,4 @@
+using System;
 using chessengine.pieces;
 
 namespace chessengine.board.moves {
@@ -21,6 +22,7 @@ namespace chessengine.board.moves {
         }
 
         public override Board Execute() {
+            if (!CanExecute()) throw new Exception();
             Builder builder = new Builder();
             foreach (Piece piece in Board.CurrentPlayer.ActivePieces) {
                 if (!MovedPiece.Equals(piece)) {
@@ -28,12 +30,15 @@ namespace chessengine.board.moves {
                 }
             }
 
-            foreach (Piece piece in this.Board.CurrentPlayer.Opponent.ActivePieces) {
-                if (!piece.Equals(GetAttackedPiece())) {
+            //TODO:Fix bug ??
+            foreach (Piece piece in Board.CurrentPlayer.Opponent.ActivePieces) {
+                if (!piece.Equals(AttackedPiece)) {
                     builder.SetPiece(piece);
                 }
             }
-            builder.SetPiece(MovedPiece.MovePiece(this));
+
+            Piece movePiece = MovedPiece.MovePiece(this);
+            builder.SetPiece(movePiece);
             builder.SetMoveMaker(Board.CurrentPlayer.Opponent.PlayerAlliance);
             return builder.Build();
         }

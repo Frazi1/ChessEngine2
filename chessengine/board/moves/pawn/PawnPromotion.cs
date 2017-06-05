@@ -1,4 +1,5 @@
-﻿using chessengine.pieces;
+﻿using System;
+using chessengine.pieces;
 using chessengine.player;
 
 namespace chessengine.board.moves.pawn {
@@ -10,6 +11,8 @@ namespace chessengine.board.moves.pawn {
         }
 
         public override Board Execute() {
+            if (!CanExecute()) throw new Exception();
+
             Board transitionBoard = Move.Execute();
             Pawn movedPawn = (Pawn)transitionBoard.GetTile(Move.DestinationCoordinate).Piece;
             Builder builder = new Builder();

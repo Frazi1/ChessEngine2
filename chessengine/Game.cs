@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using chessengine.board;
 using chessengine.board.moves;
-using chessengine.board.tiles;
 using chessengine.player;
 using chessengine.player.AI;
 using chessengine.player.AI.Minimax;
@@ -12,7 +9,8 @@ using chessengine.player.AI.Minimax;
 namespace chessengine {
     public class Game {
         private Board _currentBoard;
-        private IStrategy _strategy = new Minimax(2);
+        private readonly IStrategy _strategy = new Minimax(2);
+
 
         public List<Board> Boards { get; private set; }
         public Board CurrentBoard {
@@ -24,7 +22,7 @@ namespace chessengine {
             }
         }
 
-        public event Action BoardChanged;
+        public event BoardChangedEventHadler BoardChanged;
 
         public static int NumTilesPerRow { get { return BoardUtils.NumTilesPerRow; } }
         public static int NumTiles { get { return BoardUtils.NumTiles; } }
@@ -37,8 +35,9 @@ namespace chessengine {
         }
 
         private void OnBoardChanged() {
-            if (BoardChanged != null)
-                BoardChanged();
+            if (BoardChanged != null) {
+                BoardChanged(this, new BoardChangedArgs(CurrentBoard.CurrentPlayer.IsInCheckMate()));
+            }
         }
 
         public MoveStatus DoMove(int currentCoordinate, int destinationCoordinate) {
@@ -49,10 +48,21 @@ namespace chessengine {
         }
 
         public MoveTransition DoStrategyMove() {
-            Move move = _strategy.SelectMoveParallel(CurrentBoard, CurrentBoard.CurrentPlayer);
+            Move move = _strategy.SelectMove(CurrentBoard, CurrentBoard.CurrentPlayer);
             MoveTransition moveTransition = CurrentBoard.CurrentPlayer.MakeMove(move);
             CurrentBoard = moveTransition.TransitionBoard;
             return moveTransition;
+        }
+    }
+
+    public delegate void BoardChangedEventHadler(object sender, BoardChangedArgs args);
+
+    public class BoardChangedArgs {
+        public bool IsGameOver { get; set; }
+        public Alliance.AllianceEnum WinnerAlliance { get; set; }
+
+        public BoardChangedArgs(bool isGameOver) {
+            IsGameOver = isGameOver;
         }
     }
 }
