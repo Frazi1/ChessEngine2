@@ -111,11 +111,11 @@ namespace chessengine.player.AI {
         }
 
         private static int CheckMate(Player player) {
-            return player.IsInCheckMate() ? CheckMateBonus : 0;
+            return player.Opponent.IsInCheckMate() ? CheckMateBonus : 0;
         }
 
         private static int Check(Player player) {
-            return player.IsInCheck ? CheckBonus : 0;
+            return player.Opponent.IsInCheck ? CheckBonus : 0;
         }
 
         private static int Mobility(Player player) {
