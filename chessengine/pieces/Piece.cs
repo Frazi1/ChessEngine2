@@ -7,10 +7,10 @@ using chessengine.Extensions.EnumExtensions;
 // ReSharper disable once CheckNamespace
 namespace chessengine.pieces {
     public abstract class Piece {
-        public int PiecePosition { get; }
-        public bool IsFirstMove { get; }
-        public Alliance.AllianceEnum PieceAlliance { get; }
-        public PieceType PieceType { get; }
+        public int PiecePosition { get; private set; }
+        public bool IsFirstMove { get; private set; }
+        public Alliance.AllianceEnum PieceAlliance { get; private set; }
+        public PieceType PieceType { get; private set; }
 
         protected Piece(int piecePosition, bool isFirstMove, Alliance.AllianceEnum pieceAlliance, PieceType pieceType) {
             PiecePosition = piecePosition;

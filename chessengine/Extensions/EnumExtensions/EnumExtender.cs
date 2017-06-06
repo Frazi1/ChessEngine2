@@ -16,10 +16,10 @@ namespace chessengine.Extensions.EnumExtensions {
         public static int GetValue(this Enum enumeration) {
             MemberInfo[] memberInfo = enumeration.GetType().GetMember(enumeration.ToString());
             if (memberInfo.Length <= 0) throw new Exception(
-                string.Format("{0} не содержит значения {1}", enumeration, nameof(ValueAttribute)));
+                string.Format("{0} РЅРµ СЃРѕРґРµСЂР¶РёС‚ Р·РЅР°С‡РµРЅРёСЏ {1}", enumeration, "ValueAttribute"));
             object[] attributes = memberInfo[0].GetCustomAttributes(typeof(ValueAttribute), false);
             if (attributes.Length <= 0) throw new Exception(
-                string.Format("{0} не содержит значения {1}", enumeration, nameof(ValueAttribute)));
+                string.Format("{0} РЅРµ СЃРѕРґРµСЂР¶РёС‚ Р·РЅР°С‡РµРЅРёСЏ {1}", enumeration, "ValueAttribute"));
             return ((ValueAttribute)attributes[0]).Value;
         }
     }

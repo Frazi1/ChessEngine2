@@ -40,8 +40,9 @@ namespace chessui.Controller {
                 }
             } else if (e.RightButton == MouseButtonState.Pressed) {
                 //MessageBox.Show(Game.DoStrategyMove().ToString());
-                var moves = Helper.Instance.GetTileFromScreenPoint(Game, e.GetPosition(ChessBoard)).Piece
-                    ?.CalculateLegalMoves(Game.CurrentBoard);
+                var piece = Helper.Instance.GetTileFromScreenPoint(Game, e.GetPosition(ChessBoard)).Piece;
+                if(piece==null) return;
+                var moves = piece.CalculateLegalMoves(Game.CurrentBoard);
                 string res = string.Empty;
                 if(moves==null) return;
                 foreach (Move move in moves) {

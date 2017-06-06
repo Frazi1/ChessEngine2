@@ -107,7 +107,7 @@ namespace chessengine.pieces {
                 case PieceType.Queen:
                     return new Queen(PiecePosition, IsFirstMove, PieceAlliance);
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(pieceType), pieceType, null);
+                    throw new ArgumentOutOfRangeException("pieceType", pieceType, null);
             }
         }
         //public override string ToString() {

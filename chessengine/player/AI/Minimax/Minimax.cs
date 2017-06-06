@@ -10,19 +10,21 @@ using chessengine.Extensions.Logger;
 namespace chessengine.player.AI.Minimax {
     public class Minimax : IStrategy {
         private readonly IBoardEvaluator _boardEvaluator;
+
         private readonly int _depth;
+
+        //logging
         private readonly ILogger _logger;
+
         private int _counter = 0;
 
+        //
         public int Depth {
-            get {
-                return _depth;
-            }
+            get { return _depth; }
         }
+
         public IBoardEvaluator BoardEvaluator {
-            get {
-                return _boardEvaluator;
-            }
+            get { return _boardEvaluator; }
         }
 
         public Minimax(int depth) {
@@ -45,7 +47,7 @@ namespace chessengine.player.AI.Minimax {
                 int currentValue = Min(
                     moveTransition.TransitionBoard,
                     allianceToEvaluate,
-                    Depth);
+                    Depth - 1);
                 if (currentValue < maxValue) continue;
                 maxValue = currentValue;
                 bestMove = move;
@@ -67,7 +69,6 @@ namespace chessengine.player.AI.Minimax {
             //logging
             Stopwatch s = new Stopwatch();
             s.Start();
-            int evaluateCounter = 0;
             //
             Parallel.ForEach(board.CurrentPlayer.LegalMoves, move => {
                 MoveTransition moveTransition = board.CurrentPlayer.MakeMove(move);
@@ -75,8 +76,7 @@ namespace chessengine.player.AI.Minimax {
                 int currentValue = Min(
                     moveTransition.TransitionBoard,
                     allianceToEvaluate,
-                    Depth);
-                evaluateCounter++;
+                    Depth - 1);
                 if (currentValue <= maxValue) return;
                 lock (syncRoot) {
                     maxValue = currentValue;
@@ -86,7 +86,7 @@ namespace chessengine.player.AI.Minimax {
 
             //logging
             s.Stop();
-            _logger.Log(string.Concat("Calc time:",s.Elapsed.ToString(), " Count:", _counter));
+            _logger.Log(string.Concat("Calc time:", s.Elapsed.ToString(), " Count:", _counter));
             //
             return bestMove;
         }
@@ -130,7 +130,7 @@ namespace chessengine.player.AI.Minimax {
             }
             return max;
         }
-        
+
         private static bool IsGameOver(Player player) {
             return player.IsInStale() || player.IsInCheckMate();
         }

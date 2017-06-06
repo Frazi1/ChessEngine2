@@ -48,7 +48,7 @@ namespace chessengine {
         }
 
         public MoveTransition DoStrategyMove() {
-            Move move = _strategy.SelectMove(CurrentBoard, CurrentBoard.CurrentPlayer);
+            Move move = _strategy.SelectMoveParallel(CurrentBoard, CurrentBoard.CurrentPlayer);
             MoveTransition moveTransition = CurrentBoard.CurrentPlayer.MakeMove(move);
             CurrentBoard = moveTransition.TransitionBoard;
             return moveTransition;
