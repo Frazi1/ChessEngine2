@@ -9,7 +9,7 @@ using chessengine.player.AI.Minimax;
 namespace chessengine {
     public class Game {
         private Board _currentBoard;
-        private readonly IStrategy _strategy = new Minimax(2);
+        private readonly IStrategy _strategy = new Minimax(3);
 
 
         public List<Board> Boards { get; private set; }
