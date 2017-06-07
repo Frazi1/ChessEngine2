@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>chessengine</RootNamespace>
     <AssemblyName>chessengine</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <LangVersion>7</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -68,11 +69,13 @@
     <Compile Include="board\tiles\EmptyTile.cs" />
     <Compile Include="board\tiles\OccupiedTile.cs" />
     <Compile Include="Extensions\EnumExtensions\ValueAttribute.cs" />
-    <Compile Include="Extensions\Logger\DebugLogger.cs" />
-    <Compile Include="Extensions\Logger\ILogger.cs" />
-    <Compile Include="Game.cs" />
+    <Compile Include="Extensions\logger\debugLogger\DebugLogger.cs" />
+    <Compile Include="Extensions\logger\ILogger.cs" />
     <Compile Include="Extensions\EnumExtensions\EnumExtender.cs" />
     <Compile Include="Extensions\EnumExtensions\TextAttribute.cs" />
+    <Compile Include="Extensions\logger\progressLogger\IProgressLogger.cs" />
+    <Compile Include="game\events\BoardChangedArgs.cs" />
+    <Compile Include="game\Game.cs" />
     <Compile Include="pieces\Bishop.cs" />
     <Compile Include="pieces\King.cs" />
     <Compile Include="pieces\Knight.cs" />

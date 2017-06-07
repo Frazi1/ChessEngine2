@@ -4,9 +4,11 @@ using chessengine.pieces;
 
 namespace chessengine.board {
     public class Builder {
+
         private bool _isMoveMakerSet = false;
         private Alliance.AllianceEnum _nextMoveMaker;
         
+        public Pawn EnPassantPawn { get; private set; }
         public Dictionary<int, Piece> BoardConfig { get; private set; }
 
         public Alliance.AllianceEnum NextMoveMaker {
@@ -16,8 +18,6 @@ namespace chessengine.board {
                 _isMoveMakerSet = true;
             }
         }
-
-        public Pawn EnPassantPawn { get; private set; }
 
         public Builder() {
             BoardConfig = new Dictionary<int, Piece>();

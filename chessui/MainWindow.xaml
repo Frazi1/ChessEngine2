@@ -7,6 +7,13 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <local:ChessBoard HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="ChessBoard" Width="Auto" Height="Auto" Margin="0,0,0,0"  />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25px"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Menu Height="25px" VerticalAlignment="Top" Grid.Row="0">
+            <MenuItem Height="25px" Header="Logger" Click="MenuItem_Click"/>
+        </Menu>
+        <local:ChessBoard Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="ChessBoard" Width="Auto" Height="Auto" Margin="0"  />
     </Grid>
 </Window>

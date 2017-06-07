@@ -13,6 +13,7 @@ namespace chessengine.player {
         protected Board Board { get; set; }
         public King PlayerKing { get; set; }
         public ICollection<Move> LegalMoves { get; set; }
+
         public abstract ICollection<Piece> ActivePieces { get; }
         public abstract Alliance.AllianceEnum PlayerAlliance { get; }
         public abstract Player Opponent { get; }
@@ -56,7 +57,6 @@ namespace chessengine.player {
         public bool IsCastled() {
             throw new NotImplementedException();
         }
-
 
         private ICollection<Move> GetEscapeMoves() {
             List<Move> escapeMoves = new List<Move>();

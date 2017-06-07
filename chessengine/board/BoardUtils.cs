@@ -18,7 +18,6 @@ namespace chessengine.board {
         public static readonly bool[] SeventhRank = InitRank(48);
         public static readonly bool[] EigthRank = InitRank(54);
 
-
         public const int NumTiles = 64;
         public const int NumTilesPerRow = 8;
 
