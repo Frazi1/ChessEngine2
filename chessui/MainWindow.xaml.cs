@@ -28,7 +28,7 @@ namespace chessui {
         public MainWindow() {
             InitializeComponent();
             ProgressLogger = new ProgressLoggerWindow();
-            Game = new Game(2,ProgressLogger);
+            Game = new Game(3,ProgressLogger);
             Helper.CreateInstance(Game.NumTiles, Game.NumTilesPerRow, ChessBoard.TileSize);
             ChessController = new ChessController(Game, ChessBoard);
             ChessBoard.DataContext = Game;

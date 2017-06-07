@@ -1,8 +1,13 @@
-﻿using System.Threading;
+﻿using System;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using chessengine.board.moves;
 using chessengine.board.tiles;
 using chessengine.game;
 using chessengine.game.events;
@@ -25,7 +30,7 @@ namespace chessui.Controller {
         private MoveStatus InvokeMove(Tile fromTile, Tile toTile) {
             return Game.DoMove(fromTile.Coordinate, toTile.Coordinate);
         }
-      
+
         private void ChessBoard_MouseDown(object sender, MouseButtonEventArgs e) {
             if (e.LeftButton == MouseButtonState.Pressed) {
                 if (SelectedTile == null) {
@@ -33,17 +38,25 @@ namespace chessui.Controller {
                 } else {
                     Tile secondTile = Helper.Instance.GetTileFromScreenPoint(Game, e.GetPosition(ChessBoard));
                     MoveStatus invokeMove = InvokeMove(SelectedTile, secondTile);
-                    MessageBox.Show(invokeMove.ToString());
+                    if (Debugger.IsAttached) {
+                        MessageBox.Show(invokeMove.ToString());
+                    }
                     SelectedTile = null;
                 }
             } else if (e.RightButton == MouseButtonState.Pressed) {
                 Piece piece = Helper.Instance.GetTileFromScreenPoint(Game, e.GetPosition(ChessBoard)).Piece;
+                var moves = Game.CurrentBoard.GetAllLegalMoves().Where(m => m.MovedPiece.Equals(piece));
                 if (piece == null) return;
-                string res = Helper.ShowLegalMoves(piece, Game.CurrentBoard);
-                MessageBox.Show(res);
+//                string res = Helper.ShowLegalMoves(piece, Game.CurrentBoard);
+                StringBuilder s = new StringBuilder();
+                foreach (Move move in moves) {
+                    s.Append(move);
+                    s.Append(Environment.NewLine);
+                }
+                MessageBox.Show(s.ToString());
             }
         }
-        
+
         private void ChessBoard_Loaded(object sender, RoutedEventArgs e) {
             Game.BoardChanged += Game_BoardChanged;
             ChessBoard.MouseDown += ChessBoard_MouseDown;
@@ -58,11 +71,13 @@ namespace chessui.Controller {
                 MessageBox.Show("CheckMate");
             }
         }
-       
+
         private void ChessController_KeyDown(object sender, KeyEventArgs e) {
             if (e.Key == Key.Enter) {
                 MoveTransition moveTransition = Game.DoStrategyMove();
-                MessageBox.Show(moveTransition.ToString());
+                if (Debugger.IsAttached) {
+                    MessageBox.Show(moveTransition.ToString());
+                }
             }
         }
     }
