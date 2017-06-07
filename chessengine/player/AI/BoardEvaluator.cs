@@ -7,7 +7,6 @@ using chessengine.pieces;
 
 namespace chessengine.player.AI {
     public class BoardEvaluator : IBoardEvaluator {
-
         private const int CheckBonus = 50;
         private const int CheckMateBonus = 30000;
         private const int CastledBonus = 100;
@@ -68,26 +67,19 @@ namespace chessengine.player.AI {
             -50, -30, -30, -30, -30, -30, -30, -50
         };
 
-        public static Dictionary<PieceType, short[]> Tables { get; private set; }
+        private static Dictionary<PieceType, short[]> Tables { get; set; }
 
         public BoardEvaluator() {
-            Tables = new Dictionary<PieceType, short[]>();
-            Tables.Add(PieceType.Pawn, PawnTable);
-            Tables.Add(PieceType.Knight, KnightTable);
-            Tables.Add(PieceType.Bishop, BishopTable);
-            Tables.Add(PieceType.King, KingTable);
+            Tables = new Dictionary<PieceType, short[]> {
+                {PieceType.Pawn, PawnTable},
+                {PieceType.Knight, KnightTable},
+                {PieceType.Bishop, BishopTable},
+                {PieceType.King, KingTable}
+            };
         }
 
 
-        private static int ConvertIndex(int piecePosition, Alliance.AllianceEnum alliance) {
-            //TODO: fix ? test
-            return alliance == Alliance.AllianceEnum.White
-                ? piecePosition
-                : BoardUtils.NumTiles - piecePosition;
-            //return alliance == Alliance.AllianceEnum.White
-            //    ? piecePosition
-            //    : (byte)(((byte)(piecePosition + 56)) - (byte)((byte)(piecePosition / 8) * 16));
-        }
+      
 
         public int Evaluate(Board board, Alliance.AllianceEnum alliance) {
             Player player = alliance == Alliance.AllianceEnum.Black ? board.BlackPlayer : board.WhitePlayer;
@@ -102,6 +94,7 @@ namespace chessengine.player.AI {
                    + Mobility(player)
                    + Check(player)
                    + CheckMate(player)
+                   + PiecePositions(player)
                 //+ Castled(player)
                 ;
         }
@@ -131,6 +124,26 @@ namespace chessengine.player.AI {
                 }
             }
             return score;
+        }
+
+        private static int PiecePositions(Player player) {
+            int score = 0;
+            foreach (Piece piece in player.ActivePieces) {
+                if (Tables.ContainsKey(piece.PieceType)) {
+                    score += Tables[piece.PieceType][ConvertIndex(piece.PiecePosition, piece.PieceAlliance)];
+                }
+            }
+            return score;
+        }
+        
+        private static int ConvertIndex(int piecePosition, Alliance.AllianceEnum alliance) {
+            //TODO: fix ? test
+            return alliance == Alliance.AllianceEnum.White
+                ? piecePosition
+                : BoardUtils.NumTiles - piecePosition;
+            //return alliance == Alliance.AllianceEnum.White
+            //    ? piecePosition
+            //    : (byte)(((byte)(piecePosition + 56)) - (byte)((byte)(piecePosition / 8) * 16));
         }
     }
 }
